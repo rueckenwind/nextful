@@ -1,0 +1,10 @@
+{
+  "xxsMax": "(max-width: 479px)",
+  "xs": "(min-width: 480px)",
+  "xsMax": "(max-width: 767px)",
+  "sm": "(min-width: 768px)",
+  "smMax": "(max-width: 991px)",
+  "md": "(min-width: 992px)",
+  "mdMax": "(max-width: 1199px)",
+  "lg": "(min-width: 1200px)"
+}
