@@ -1,5 +1,5 @@
 const { createClient } = require('contentful');
-const cleanPage = require('./cleanPage');
+const getPageProps = require('./remodel/getPageProps');
 
 async function exportPathMap() {
   const staticPages = {
@@ -26,7 +26,7 @@ async function exportPathMap() {
   });
 
   const sortetPages = res.items.sort((a, b) => a.fields.url.localeCompare(b.fields.url));
-  const cleanedPages = sortetPages.map(page => cleanPage(page));
+  const cleanedPages = sortetPages.map(page => getPageProps(page));
 
   const contentfulPages = cleanedPages.reduce((state, current) => {
     state[current.url] = {

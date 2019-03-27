@@ -51,19 +51,32 @@ const StyledImg = styled.img`
   object-fit: cover;
 `;
 
-const Header = ({ image }) => (
-  <StyledHeader>
-    <LogoLink href="/">
-      <LogoWrapper>
-        <Logo />
-      </LogoWrapper>
-    </LogoLink>
-    <StyledImg src={image} />
-  </StyledHeader>
-);
+const Header = ({ images }) => {
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+  const image = images.length > 0 && images[getRandomInt(images.length)];
+  return (
+    <StyledHeader>
+      <LogoLink href="/">
+        <LogoWrapper>
+          <Logo />
+        </LogoWrapper>
+      </LogoLink>
+      {image && <StyledImg src={image.src} alt={image.alt} />}
+    </StyledHeader>
+  );
+};
+
+Header.defaultProps = {
+  images: [],
+};
 
 Header.propTypes = {
-  image: PropTypes.string.isRequired,
+  images: PropTypes.arrayOf(PropTypes.shape({
+    src: PropTypes.string,
+    alt: PropTypes.string,
+  })),
 };
 
 export default Header;
