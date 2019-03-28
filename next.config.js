@@ -13,6 +13,21 @@ module.exports = {
         loader: 'raw-loader',
       }],
     });
+
+    webpackConfig.module.rules.push({
+      test: /\.(jpe?g|png|gif)$/,
+      use: [{
+        loader: 'url-loader',
+        options: {
+          limit: 1024,
+          fallback: 'file-loader',
+          publicPath: '/_next/static/images/',
+          outputPath: 'static/images/',
+          name: '[name].[ext]',
+        },
+      }],
+    });
+
     return webpackConfig;
   },
 };

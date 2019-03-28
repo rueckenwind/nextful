@@ -1,32 +1,20 @@
 /** @jsx jsx */
 
-// import PropTypes from 'prop-types';
+import { Fragment } from 'react';
 import { jsx } from '@emotion/core';
-import GlobalStyles from '../app/components/GlobalStyles';
-import Header from '../app/components/Header';
-import Template from '../app/components/Template';
-import RichText from '../app/components/RichText';
 
-const CfPage = ({
-  images, content, sidebar,
-}) => {
-  console.log({
-    images, content, sidebar: sidebar.content,
-  });
+import GlobalStyles from '../app/components/GlobalStyles';
+import Page from '../app/components/Page';
+
+const CfPage = (props) => {
   return (
-    <div>
+    <Fragment>
       <GlobalStyles />
-      { images && <Header images={images} /> }
-      <Template
-        header={{ images }}
-        content={<RichText content={content} />}
-        sidebar={<RichText content={sidebar.content} />} />
-    </div>
+      <Page {...props} />
+    </Fragment>
   );
 };
 
-CfPage.getInitialProps = async ({ query }) => {
-  return query;
-};
+CfPage.getInitialProps = async ({ query }) => query;
 
 export default CfPage;

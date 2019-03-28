@@ -10,7 +10,6 @@ const StyledHeader = styled.header`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: calc(100vw /3);
   background-color: #ff0;
 
   @media ${viewportsJs.xs} {
@@ -46,9 +45,13 @@ const LogoWrapper = styled.div`
 
 const StyledImg = styled.img`
   width: 100%;
-  height: 100%;
+  height: calc(100vw / 3);
   background-color: #f0f;
   object-fit: cover;
+
+  @media ${viewportsJs.xs} {
+    height: 100%;
+  }
 `;
 
 const Header = ({ images }) => {

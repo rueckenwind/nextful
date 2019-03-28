@@ -12,5 +12,4 @@ export default () => (
     <Global styles={css`${normalize}`} />
     <Global styles={css`${globalstyles}`} />
   </Fragment>
-
 );

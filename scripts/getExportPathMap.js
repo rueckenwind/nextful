@@ -21,6 +21,7 @@ async function exportPathMap() {
   const res = await getEntries({
     content_type: 'page',
     limit: 1000,
+    include: 10,
   }).catch((e) => {
     throw new Error(e);
   });
