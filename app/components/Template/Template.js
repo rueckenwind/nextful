@@ -11,21 +11,22 @@ const Grid = styled.div`
 
   display: grid;
   grid-template-areas:
-    "content"
-    "sidebar";
+    'content'
+    'sidebar';
   grid-column-gap: var(--grid-column-gap);
 
   @media ${viewportsJs.sm} {
     --grid-column-gap: 2rem;
 
-    grid-template-areas: "content sidebar";
+    grid-template-areas: 'content sidebar';
     grid-template-columns: 2fr 1fr;
     max-width: 65rem;
   }
 `;
 
 const GridContent = styled.div`
-  grid-area: ${({ fullWidth }) => {
+  grid-area:
+    ${({ fullWidth }) => {
     return fullWidth ? 'content / content / sidebar / sidebar' : 'content';
   }};
 `;

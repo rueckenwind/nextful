@@ -29,8 +29,8 @@ const LogoLink = styled.a`
     top: 0;
     left: 50%;
     width: auto;
-    transform: translateX(-50%);
     border-radius: 0 0 .5em .5em;
+    transform: translateX(-50%);
   }
 `;
 

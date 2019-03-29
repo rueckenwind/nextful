@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import viewportsJs from '../../js/viewports.json';
 
 const MaxWidth = styled.div`
+  flex-grow: 1;
   display: flex;
   justify-content: center;
   padding-right: 1rem;

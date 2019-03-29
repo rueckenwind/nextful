@@ -14,12 +14,12 @@ const StyledSpokes = styled.path`
   will-change: transform;
   transition: animation-duration 200ms;
 
-${StyledLogo}:hover & {
+  ${StyledLogo}:hover & {
     animation-duration: 150ms;
   }
 
   @keyframes rotate {
-    to { transform: rotate(calc(1turn / 16)) }
+    to { transform: rotate(calc(1turn / 16)); }
   }
 `;
 
