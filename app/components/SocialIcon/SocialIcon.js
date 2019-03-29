@@ -8,7 +8,6 @@ import {
 } from 'react-icons/fa';
 import upperCaseFirst from 'upper-case-first';
 
-
 import colors from '../../js/colors';
 import times from '../../js/times';
 
@@ -49,9 +48,15 @@ const SocialLink = styled.a`
 `;
 
 const SocialIcon = ({ network }) => {
+  console.log(network);
   const { href, Icon } = networks[network];
   return (
-    <SocialLink href={href} title={upperCaseFirst(network)}><Icon /></SocialLink>
+    <SocialLink
+      network={network}
+      href={href}
+      title={upperCaseFirst(network)}>
+      <Icon />
+    </SocialLink>
   );
 };
 

@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import { BLOCKS } from '@contentful/rich-text-types';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 
 import { H1, H2, H3 } from '../Headline';
+import Link from '../Link';
 import MapStatic from '../MapStatic';
 
 const options = {
@@ -24,6 +25,8 @@ const options = {
 
       // return <CustomComponent title={title} description={description} />;
     },
+
+    [INLINES.HYPERLINK]: (node, children) => <Link href={node.data.uri}>{children}</Link>,
   },
 };
 
