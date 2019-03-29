@@ -1,5 +1,6 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
 
 import Header from '../Header';
 import Menu from '../Menu';
@@ -7,29 +8,46 @@ import Template from '../Template';
 import RichText from '../RichText';
 import Footer from '../Footer';
 
-const Page = ({ images, content, sidebar }) => {
+const StyledPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+`;
+
+const Page = ({
+  images, content, additionalContent, sidebar,
+}) => {
+  const sidebarContent = sidebar ? (sidebar.content || null) : null;
   return (
-    <Fragment>
-      { images && <Header images={images} /> }
+    <StyledPage>
+      <Header images={images} />
       <Menu />
       <Template
         header={{ images }}
-        content={<RichText content={content} />}
-        sidebar={<RichText content={sidebar.content} />} />
+        content={content && <RichText content={content} />}
+        additionalContent={additionalContent}
+        sidebar={sidebarContent && <RichText content={sidebarContent} />} />
       <Footer />
-    </Fragment>
+    </StyledPage>
   );
 };
 
 Page.defaultProps = {
-  images: [],
+  images: [
+    {
+      src: 'https://images.ctfassets.net/rdglyrp094mu/6XNtRN11MjJPrKbo1C74sh/ce19af67df4e5942da2be8a2cba8fa7e/fritz-bielmeier-46072-unsplash.jpg', // eslint-disable-line max-len
+      alt: '',
+    },
+  ],
   content: null,
+  additionalContent: null,
   sidebar: null,
 };
 
 Page.propTypes = {
   images: PropTypes.array,
   content: PropTypes.object,
+  additionalContent: PropTypes.object,
   sidebar: PropTypes.object,
 };
 

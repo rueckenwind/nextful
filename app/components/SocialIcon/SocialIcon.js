@@ -48,13 +48,14 @@ const SocialLink = styled.a`
 `;
 
 const SocialIcon = ({ network }) => {
-  console.log(network);
   const { href, Icon } = networks[network];
   return (
     <SocialLink
       network={network}
       href={href}
-      title={upperCaseFirst(network)}>
+      title={upperCaseFirst(network)}
+      target="_blank"
+      rel="noopener noreferrer">
       <Icon />
     </SocialLink>
   );

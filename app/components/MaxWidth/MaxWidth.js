@@ -14,6 +14,7 @@ const MaxWidth = styled.div`
   }
 
   > * {
+    flex-grow: 1;
     max-width: 65rem;
   }
 `;

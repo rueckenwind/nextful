@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import viewportsJs from '../../js/viewports.json';
 
 import MaxWidth from '../MaxWidth';
 import ContentBox from '../ContentBox';
+import News from '../News/News';
+
+const StyledTemplate = styled.div`
+  flex-grow: 1;
+`;
 
 const Grid = styled.div`
   --grid-column-gap: 1rem;
@@ -35,36 +40,57 @@ const GridSidebar = styled.div`
   grid-area: sidebar;
 `;
 
-const Template = ({ content, sidebar }) => {
-  return (
-    <MaxWidth>
-      <Grid>
-        <GridContent fullWidth={!sidebar}>
-          <ContentBox>
-            {content}
-          </ContentBox>
-        </GridContent>
+const Template = ({ content, sidebar, additionalContent }) => {
+  let additionalContentModeled = null;
+  if (additionalContent) {
+    switch (additionalContent.id) {
+      case 'news':
+        additionalContentModeled = (
+          <Fragment>
+            {additionalContent.content.map(news => <News {...news} key={news.slug} isExerpt={true} />)}
+          </Fragment>
+        );
+        break;
 
-        { sidebar && (
-          <GridSidebar>
+      default:
+        break;
+    }
+  }
+
+  return (
+    <StyledTemplate>
+      <MaxWidth>
+        <Grid>
+          <GridContent fullWidth={!sidebar}>
             <ContentBox>
-              { sidebar }
+              {content}
+              {additionalContentModeled}
             </ContentBox>
-          </GridSidebar>
-        ) }
-      </Grid>
-    </MaxWidth>
+          </GridContent>
+
+          { sidebar && (
+            <GridSidebar>
+              <ContentBox>
+                { sidebar }
+              </ContentBox>
+            </GridSidebar>
+          ) }
+        </Grid>
+      </MaxWidth>
+    </StyledTemplate>
   );
 };
 
 Template.defaultProps = {
-  content: null,
-  sidebar: null,
+  content: undefined,
+  sidebar: undefined,
+  additionalContent: null,
 };
 
 Template.propTypes = {
   content: PropTypes.node,
   sidebar: PropTypes.node,
+  additionalContent: PropTypes.object,
 };
 
 export default Template;

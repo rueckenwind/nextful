@@ -1,5 +1,6 @@
 const { createClient } = require('contentful');
 const getPageProps = require('./remodel/getPageProps');
+const getNews = require('./getNews');
 
 async function exportPathMap() {
   const staticPages = {
@@ -28,8 +29,19 @@ async function exportPathMap() {
 
   const sortetPages = res.items.sort((a, b) => a.fields.url.localeCompare(b.fields.url));
   const cleanedPages = sortetPages.map(page => getPageProps(page));
+  const enhancedPages = await Promise.all(cleanedPages.map(async (page) => {
+    if (page.url && page.url === '/news/') {
+      page.additionalContent = {
+        id: 'news',
+        content: await getNews(getEntries).catch((e) => {
+          throw new Error(e);
+        }),
+      };
+    }
+    return page;
+  }));
 
-  const contentfulPages = cleanedPages.reduce((state, current) => {
+  const contentfulPages = enhancedPages.reduce((state, current) => {
     state[current.url] = {
       page: '/page',
       query: {

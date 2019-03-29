@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 export const H1 = styled.h1`
   margin-bottom: .5em;
-  font-size: 1.25rem;
+  font-size: 2rem;
   font-weight: normal;
 `;
 
