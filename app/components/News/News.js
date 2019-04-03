@@ -5,7 +5,8 @@ import styled from '@emotion/styled';
 import viewportsJs from '../../js/viewports.json';
 import colors from '../../js/colors';
 
-import { H3 } from '../Headline';
+import { H3 } from '../Typography';
+import Link from '../Link';
 import RichText from '../RichText';
 
 const StyledNews = styled.article`
@@ -39,27 +40,29 @@ const Img = styled.img`
 const News = ({
   slug, title, image, content, isExerpt,
 }) => {
+  const link = `/news/${slug}/`;
+
   const img = image && {
     x1: `${image.src}?w=200&h=200&fit=fill`,
     x2: `${image.src}?w=400&h=400&fit=fill`,
   };
 
-  if (isExerpt) {
-    const exerp = content.content.find(el => el.nodeType === 'paragraph');
-    content.content = [exerp];
-  }
+  const checkedContent = !isExerpt ? content : {
+    ...content,
+    content: [content.content.find(el => el.nodeType === 'paragraph')],
+  };
 
-  // console.log(content);
 
   return (
     <StyledNews>
       <Content>
-        <WrapTitle href={`/news/${slug}`}>
+        <WrapTitle href={link}>
           <H3>{title}</H3>
         </WrapTitle>
-        <RichText content={content} />
+        <RichText content={checkedContent} />
+        {isExerpt && <Link href={link}>weiterlesen »</Link>}
       </Content>
-      <WrapImg href={`/news/${slug}`}>
+      <WrapImg href={link}>
         <Img
           src={img.x1}
           srcSet={`${img.x1} 1x, ${img.x2} 2x`}
@@ -80,7 +83,7 @@ News.propTypes = {
     src: PropTypes.string,
     alt: PropTypes.string,
   }).isRequired,
-  content: PropTypes.string.isRequired,
+  content: PropTypes.object.isRequired,
   isExerpt: PropTypes.bool,
 };
 

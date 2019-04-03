@@ -1,9 +1,17 @@
 module.exports = ({ sys, fields } = {}) => {
   const { id } = sys;
-  const { content = null } = fields;
+  const { widgets } = fields;
+
+  const cleanedWidgets = widgets.map((widget) => {
+    console.log(widget.fields.content);
+    return {
+      padded: widget.fields.padded,
+      content: widget.fields.content,
+    };
+  });
 
   return {
     id,
-    content,
+    widgets: cleanedWidgets,
   };
 };

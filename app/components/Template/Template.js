@@ -6,6 +6,7 @@ import viewportsJs from '../../js/viewports.json';
 import MaxWidth from '../MaxWidth';
 import ContentBox from '../ContentBox';
 import News from '../News/News';
+import RichText from '../RichText';
 
 const StyledTemplate = styled.div`
   flex-grow: 1;
@@ -40,7 +41,9 @@ const GridSidebar = styled.div`
   grid-area: sidebar;
 `;
 
-const Template = ({ content, sidebar, additionalContent }) => {
+const Template = ({
+  isHome, content, sidebar, additionalContent,
+}) => {
   let additionalContentModeled = null;
   if (additionalContent) {
     switch (additionalContent.id) {
@@ -57,24 +60,38 @@ const Template = ({ content, sidebar, additionalContent }) => {
     }
   }
 
+  const HomeContent = () => (
+    <Fragment>
+      <ContentBox>
+        Partner
+      </ContentBox>
+      <ContentBox>
+        Latest Bikes
+      </ContentBox>
+    </Fragment>
+  );
+
+  console.log(sidebar.widgets);
+
   return (
     <StyledTemplate>
       <MaxWidth>
         <Grid>
           <GridContent fullWidth={!sidebar}>
+            { isHome && <HomeContent /> }
             <ContentBox>
               {content}
               {additionalContentModeled}
             </ContentBox>
           </GridContent>
 
-          { sidebar && (
-            <GridSidebar>
-              <ContentBox>
-                { sidebar }
+          <GridSidebar>
+            { sidebar.widgets && sidebar.widgets.map(widget => (
+              <ContentBox padded={widget.padded}>
+                <RichText content={widget.content} />
               </ContentBox>
-            </GridSidebar>
-          ) }
+            )) }
+          </GridSidebar>
         </Grid>
       </MaxWidth>
     </StyledTemplate>
@@ -82,12 +99,14 @@ const Template = ({ content, sidebar, additionalContent }) => {
 };
 
 Template.defaultProps = {
+  isHome: false,
   content: undefined,
   sidebar: undefined,
   additionalContent: null,
 };
 
 Template.propTypes = {
+  isHome: PropTypes.bool,
   content: PropTypes.node,
   sidebar: PropTypes.node,
   additionalContent: PropTypes.object,

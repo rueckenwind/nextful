@@ -1,31 +1,38 @@
 module.exports = ({ sys, fields } = {}) => {
   const { id } = sys;
   const {
+    name,
     slug,
-    title,
     image,
     content,
+    category,
+    frameShape,
   } = fields;
+
+  console.log({
+    category,
+    frameShape,
+  });
 
   if (!slug) {
     throw new Error('Slug not defined!');
   }
 
-  const newsProps = {
+  const bikeProps = {
     id,
-    title,
+    name,
     slug,
   };
 
   if (image) {
-    newsProps.image = {
+    bikeProps.image = {
       src: image.fields.file.url,
       alt: image.fields.description || image.fields.title,
     };
   }
 
   if (content) {
-    newsProps.content = {
+    bikeProps.content = {
       ...content,
       content: [
         {
@@ -33,7 +40,7 @@ module.exports = ({ sys, fields } = {}) => {
           content: [{
             data: {},
             marks: [],
-            value: title,
+            value: name,
             nodeType: 'text',
           }],
           nodeType: 'heading-1',
@@ -43,5 +50,5 @@ module.exports = ({ sys, fields } = {}) => {
     };
   }
 
-  return newsProps;
+  return bikeProps;
 };

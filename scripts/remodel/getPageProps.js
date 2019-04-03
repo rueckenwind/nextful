@@ -1,12 +1,12 @@
 const getSidebarProps = require('./getSidebarProps');
 
-module.exports = ({ sys, fields } = {}) => {
+module.exports = ({ sys, fields } = {}, defaultSidebar) => {
   const { id } = sys;
   const {
     url,
     images,
     content,
-    sidebar,
+    sidebar = defaultSidebar,
   } = fields;
 
   if (!url) {

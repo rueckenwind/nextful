@@ -1,6 +1,7 @@
 const { createClient } = require('contentful');
 const getPageProps = require('./remodel/getPageProps');
-const getNews = require('./getNews');
+const getNewsProps = require('./remodel/getNewsProps');
+const getBikeProps = require('./remodel/getBikeProps');
 
 async function exportPathMap() {
   const staticPages = {
@@ -19,7 +20,63 @@ async function exportPathMap() {
     accessToken: process.env.CONTENTFUL_CONTENT_DELIVERY_TOKEN,
   });
 
-  const res = await getEntries({
+  const { items: [defaultSidebar] } = await getEntries({
+    content_type: 'sidebar',
+    'sys.id': '2naudBsDC6fu3yTOrr7Zom',
+  }).catch((e) => {
+    console.log(e);
+    throw new Error(e);
+  });
+
+  console.log(defaultSidebar);
+
+  const resNews = await getEntries({
+    content_type: 'news',
+    limit: 1000,
+    include: 10,
+    'fields.publishDate[lte]': new Date(),
+    order: '-fields.publishDate', // '-' for reverse order
+  }).catch((e) => {
+    console.log(e);
+    throw new Error(e);
+  });
+
+  const cleanedNews = resNews.items.map(item => getNewsProps(item));
+
+  const contentfulNews = cleanedNews.reduce((state, current) => {
+    state[`/news/${current.slug}/`] = {
+      page: '/page',
+      query: {
+        ...current,
+        sidebar: defaultSidebar.fields,
+      },
+    };
+    return state;
+  }, {});
+
+  const resBikes = await getEntries({
+    content_type: 'bike',
+    limit: 1000,
+    include: 10,
+  }).catch((e) => {
+    throw new Error(e);
+  });
+
+  const cleanedBikes = resBikes.items.map(item => getBikeProps(item));
+
+  const contentfulBikes = cleanedBikes.reduce((state, current) => {
+    state[`/fahrrad/${current.slug}/`] = {
+      page: '/page',
+      query: {
+        ...current,
+        sidebar: defaultSidebar.fields,
+      },
+    };
+    return state;
+  }, {});
+
+
+  const resPages = await getEntries({
     content_type: 'page',
     limit: 1000,
     include: 10,
@@ -27,19 +84,21 @@ async function exportPathMap() {
     throw new Error(e);
   });
 
-  const sortetPages = res.items.sort((a, b) => a.fields.url.localeCompare(b.fields.url));
-  const cleanedPages = sortetPages.map(page => getPageProps(page));
-  const enhancedPages = await Promise.all(cleanedPages.map(async (page) => {
+  const sortetPages = resPages.items.sort((a, b) => a.fields.url.localeCompare(b.fields.url));
+  const cleanedPages = sortetPages.map(page => getPageProps(page, defaultSidebar));
+  const enhancedPages = cleanedPages.map((page) => {
+    if (page.url && page.url === '/') {
+      page.isHome = true;
+    }
+
     if (page.url && page.url === '/news/') {
       page.additionalContent = {
         id: 'news',
-        content: await getNews(getEntries).catch((e) => {
-          throw new Error(e);
-        }),
+        content: cleanedNews,
       };
     }
     return page;
-  }));
+  });
 
   const contentfulPages = enhancedPages.reduce((state, current) => {
     state[current.url] = {
@@ -54,6 +113,8 @@ async function exportPathMap() {
   return {
     ...staticPages,
     ...contentfulPages,
+    ...contentfulNews,
+    ...contentfulBikes,
   };
 }
 
