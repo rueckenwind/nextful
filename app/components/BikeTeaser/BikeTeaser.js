@@ -11,6 +11,8 @@ const Teaser = styled.a`
   display: grid;
   grid-template-columns: 33% auto;
   grid-gap: 1rem;
+  color: inherit;
+  text-decoration: none;
 `;
 
 const Img = styled.img`
@@ -23,17 +25,44 @@ const Img = styled.img`
   }
 `;
 
+const Grid = styled.div`
+  display: grid;
+  grid-gap: .5rem;
+`;
+
+const SubHeader = styled.div`
+  font-size: .75rem;
+  font-weight: bold;
+`;
+
 const bikeLink = slug => `/fahrrad/${slug}/`;
 
 const BikeTeaser = (props) => {
   console.log(props);
-  const { name, image = {}, slug } = props;
+  const {
+    name, image, slug, category, frameShapes, status,
+  } = props;
   return (
     <Teaser href={bikeLink(slug)}>
       <Img src={`${image.src}?w=200`} alt={image.alt} />
-      <div>
+      <Grid>
         <H3>{ name }</H3>
-      </div>
+
+        <div>
+          <SubHeader>Kategorie</SubHeader>
+          { category.name }
+        </div>
+
+        <div>
+          <SubHeader>Rahmenform</SubHeader>
+          { frameShapes.map(frameShape => frameShape.name).join(', ') }
+        </div>
+
+        <div>
+          <SubHeader>Status</SubHeader>
+          { status }
+        </div>
+      </Grid>
     </Teaser>
   );
 };
@@ -43,6 +72,7 @@ BikeTeaser.defaultProps = {
     src: defaultBikeImg,
     alt: 'Default Bike Image',
   },
+  frameShapes: [],
 };
 
 BikeTeaser.propTypes = {
@@ -51,7 +81,7 @@ BikeTeaser.propTypes = {
     src: PropTypes.string,
     alt: PropTypes.string,
   }),
-
+  frameShapes: PropTypes.array,
 };
 
 export default BikeTeaser;

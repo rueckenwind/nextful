@@ -10,10 +10,7 @@ const Grid = styled.div`
 `;
 
 const BikesList = ({ bikes }) => {
-  const filteredBikes = bikes.map((bike) => {
-    delete bike.image;
-    return bike;
-  });
+  const filteredBikes = bikes;
 
   console.log(filteredBikes);
 

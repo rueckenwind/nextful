@@ -1,4 +1,4 @@
-module.exports = ({ sys, fields } = {}) => {
+module.exports = ({ sys, fields } = {}, isTeaser = false) => {
   const { id } = sys;
   const {
     name,
@@ -6,13 +6,14 @@ module.exports = ({ sys, fields } = {}) => {
     image,
     content,
     category,
-    frameShape,
+    frameShapes,
+    color,
+    status,
   } = fields;
 
-  // console.log({
-  //   category,
-  //   frameShape,
-  // });
+  console.log({
+    frameShapes,
+  });
 
   if (!slug) {
     throw new Error('Slug not defined!');
@@ -22,6 +23,9 @@ module.exports = ({ sys, fields } = {}) => {
     id,
     name,
     slug,
+    category: category.fields,
+    frameShapes: frameShapes.map(item => item.fields),
+    status,
   };
 
   if (image) {
@@ -29,6 +33,10 @@ module.exports = ({ sys, fields } = {}) => {
       src: image.fields.file.url,
       alt: image.fields.description || image.fields.title,
     };
+  }
+
+  if (isTeaser) {
+    return bikeProps;
   }
 
   if (content) {

@@ -20,11 +20,13 @@ const StyledFooter = styled.footer`
 `;
 
 const FooterContent = styled.div`
+  text-align: center;
 
   @media ${viewportsJs.sm} {
     flex-grow: 1;
     display: flex;
     justify-content: space-between;
+    text-align: left;
   }
 `;
 

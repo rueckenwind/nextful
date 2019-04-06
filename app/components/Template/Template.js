@@ -8,7 +8,7 @@ import ContentBox from '../ContentBox';
 import News from '../News/News';
 import RichText from '../RichText';
 import Partner from '../Partner';
-import BikesList from '../BikesList/BikesList.js';
+import BikesList from '../BikesList';
 
 const StyledTemplate = styled.main`
   flex-grow: 1;
@@ -41,6 +41,9 @@ const GridContent = styled.section`
 
 const GridSidebar = styled.aside`
   grid-area: sidebar;
+  max-width: 334px;
+  margin-right: auto;
+  margin-left: auto;
 `;
 
 const Template = ({

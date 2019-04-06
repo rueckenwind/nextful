@@ -63,6 +63,7 @@ async function exportPathMap() {
   });
 
   const cleanedBikes = resBikes.items.map(item => getBikeProps(item));
+  const cleanedBikesForList = resBikes.items.map(item => getBikeProps(item, true));
 
   const contentfulBikes = cleanedBikes.reduce((state, current) => {
     state[`/fahrrad/${current.slug}/`] = {
@@ -94,7 +95,7 @@ async function exportPathMap() {
     if (page.url && page.url === '/fahrrad/') {
       page.additionalContent = {
         id: 'bikes',
-        content: cleanedBikes,
+        content: cleanedBikesForList,
       };
     }
 
