@@ -14,13 +14,8 @@ const StyledFooter = styled.footer`
   background-color: ${colors.blue};
 
   @media ${viewportsJs.sm} {
-    padding-top: .75rem;
-    padding-bottom: .75rem;
-  }
-
-  @media ${viewportsJs.md} {
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
   }
 `;
 

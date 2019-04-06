@@ -2,6 +2,7 @@ const { createClient } = require('contentful');
 const getPageProps = require('./remodel/getPageProps');
 const getNewsProps = require('./remodel/getNewsProps');
 const getBikeProps = require('./remodel/getBikeProps');
+const getSidebarProps = require('./remodel/getSidebarProps');
 
 async function exportPathMap() {
   const staticPages = {
@@ -23,12 +24,11 @@ async function exportPathMap() {
   const { items: [defaultSidebar] } = await getEntries({
     content_type: 'sidebar',
     'sys.id': '2naudBsDC6fu3yTOrr7Zom',
+    include: 10,
   }).catch((e) => {
     console.log(e);
     throw new Error(e);
   });
-
-  console.log(defaultSidebar);
 
   const resNews = await getEntries({
     content_type: 'news',
@@ -48,7 +48,7 @@ async function exportPathMap() {
       page: '/page',
       query: {
         ...current,
-        sidebar: defaultSidebar.fields,
+        sidebar: getSidebarProps(defaultSidebar),
       },
     };
     return state;
@@ -69,7 +69,7 @@ async function exportPathMap() {
       page: '/page',
       query: {
         ...current,
-        sidebar: defaultSidebar.fields,
+        sidebar: getSidebarProps(defaultSidebar),
       },
     };
     return state;
@@ -89,6 +89,13 @@ async function exportPathMap() {
   const enhancedPages = cleanedPages.map((page) => {
     if (page.url && page.url === '/') {
       page.isHome = true;
+    }
+
+    if (page.url && page.url === '/fahrrad/') {
+      page.additionalContent = {
+        id: 'bikes',
+        content: cleanedBikes,
+      };
     }
 
     if (page.url && page.url === '/news/') {

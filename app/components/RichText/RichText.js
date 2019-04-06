@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 
-import { H1, H2, H3, UL, OL, LI } from '../Typography';
+import { H1, H2, H3, UL, OL, LI, P, HR } from '../Typography';
 import Link from '../Link';
 import MapStatic from '../MapStatic';
+import { OpeningHours, OpenStatus } from '../OpeningHours';
+import ContactForm from '../ContactForm';
 
 const options = {
   renderNode: {
@@ -16,27 +18,29 @@ const options = {
     [BLOCKS.OL_LIST]: (node, children) => <OL>{children}</OL>,
     [BLOCKS.LIST_ITEM]: (node, children) => <LI>{children}</LI>,
     [BLOCKS.PARAGRAPH]: (node, children) => {
-      if (!children || children[0] === '') return null;
-      return (<p>{children}</p>);
+      if (!children || (children.length === 1 && children[0] === '')) return null;
+      return (<P>{children}</P>);
     },
+    [BLOCKS.HR]: () => <HR />,
     [BLOCKS.EMBEDDED_ENTRY]: (node) => {
-      const { id, ...fields } = node.data.target.fields;
+      const { id } = node.data.target.fields;
 
       switch (id) {
         case 'openingStatus':
-          return <div>openingStatus</div>;
+          return <OpenStatus />;
 
         case 'openingHours':
-          return <div>openingHours</div>;
+          return <OpeningHours />;
 
         case 'staticMap':
-          return <MapStatic {...fields} />;
+          return <MapStatic />;
+
+        case 'contactForm':
+          return <ContactForm />;
 
         default:
           return null;
       }
-
-      // return <CustomComponent title={title} description={description} />;
     },
 
     [INLINES.HYPERLINK]: (node, children) => <Link href={node.data.uri}>{children}</Link>,

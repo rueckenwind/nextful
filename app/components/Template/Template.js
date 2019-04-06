@@ -7,8 +7,10 @@ import MaxWidth from '../MaxWidth';
 import ContentBox from '../ContentBox';
 import News from '../News/News';
 import RichText from '../RichText';
+import Partner from '../Partner';
+import BikesList from '../BikesList/BikesList.js';
 
-const StyledTemplate = styled.div`
+const StyledTemplate = styled.main`
   flex-grow: 1;
 `;
 
@@ -22,7 +24,7 @@ const Grid = styled.div`
   grid-column-gap: var(--grid-column-gap);
 
   @media ${viewportsJs.sm} {
-    --grid-column-gap: 2rem;
+    --grid-column-gap: 1.25rem;
 
     grid-template-areas: 'content sidebar';
     grid-template-columns: 2fr 1fr;
@@ -30,14 +32,14 @@ const Grid = styled.div`
   }
 `;
 
-const GridContent = styled.div`
+const GridContent = styled.section`
   grid-area:
     ${({ fullWidth }) => {
     return fullWidth ? 'content / content / sidebar / sidebar' : 'content';
   }};
 `;
 
-const GridSidebar = styled.div`
+const GridSidebar = styled.aside`
   grid-area: sidebar;
 `;
 
@@ -55,6 +57,12 @@ const Template = ({
         );
         break;
 
+      case 'bikes':
+        additionalContentModeled = (
+          <BikesList bikes={additionalContent.content} />
+        );
+        break;
+
       default:
         break;
     }
@@ -63,15 +71,13 @@ const Template = ({
   const HomeContent = () => (
     <Fragment>
       <ContentBox>
-        Partner
+        <Partner />
       </ContentBox>
       <ContentBox>
         Latest Bikes
       </ContentBox>
     </Fragment>
   );
-
-  console.log(sidebar.widgets);
 
   return (
     <StyledTemplate>
@@ -87,7 +93,7 @@ const Template = ({
 
           <GridSidebar>
             { sidebar.widgets && sidebar.widgets.map(widget => (
-              <ContentBox padded={widget.padded}>
+              <ContentBox padded={widget.padded} key={widget.id}>
                 <RichText content={widget.content} />
               </ContentBox>
             )) }
@@ -108,7 +114,7 @@ Template.defaultProps = {
 Template.propTypes = {
   isHome: PropTypes.bool,
   content: PropTypes.node,
-  sidebar: PropTypes.node,
+  sidebar: PropTypes.object,
   additionalContent: PropTypes.object,
 };
 

@@ -9,10 +9,10 @@ module.exports = ({ sys, fields } = {}) => {
     frameShape,
   } = fields;
 
-  console.log({
-    category,
-    frameShape,
-  });
+  // console.log({
+  //   category,
+  //   frameShape,
+  // });
 
   if (!slug) {
     throw new Error('Slug not defined!');

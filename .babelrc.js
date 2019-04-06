@@ -4,8 +4,16 @@ module.exports = {
     ['inline-react-svg', {
       svgo: {
         plugins: [{
-          cleanupIDs: false
-        }]
+          cleanupIDs: false,
+          removeTitle: true,
+        },
+        { addAttributesToSVGElement: {
+          attributes: [
+            'width="100%"',
+            'height="100%"',
+            'preserveAspectRatio="xMinYMid meet"',
+          ]
+        }}]
       }
     }],
     'emotion',

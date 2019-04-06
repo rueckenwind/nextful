@@ -9,3 +9,8 @@ export {
   OL,
   LI,
 } from './Lists';
+
+export {
+  P,
+  HR,
+} from './Other';

@@ -3,8 +3,8 @@ module.exports = ({ sys, fields } = {}) => {
   const { widgets } = fields;
 
   const cleanedWidgets = widgets.map((widget) => {
-    console.log(widget.fields.content);
     return {
+      id: widget.sys.id,
       padded: widget.fields.padded,
       content: widget.fields.content,
     };

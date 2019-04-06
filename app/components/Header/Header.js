@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import viewportsJs from '../../js/viewports.json';
+import colors from '../../js/colors';
 
 import Logo from './Logo';
 
@@ -10,7 +11,6 @@ const StyledHeader = styled.header`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #ff0;
 
   @media ${viewportsJs.xs} {
     height: 30vh;
@@ -46,7 +46,7 @@ const LogoWrapper = styled.div`
 const StyledImg = styled.img`
   width: 100%;
   height: calc(100vw / 3);
-  background-color: #f0f;
+  background-color: ${colors.graydark};
   object-fit: cover;
 
   @media ${viewportsJs.xs} {
@@ -54,22 +54,43 @@ const StyledImg = styled.img`
   }
 `;
 
-const Header = ({ images }) => {
-  function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
+class Header extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      viewportWidth: 320,
+    };
+
+    this.image = props.images.length > 0 && props.images[getRandomInt(props.images.length)];
   }
-  const image = images.length > 0 && images[getRandomInt(images.length)];
-  return (
-    <StyledHeader>
-      <LogoLink href="/">
-        <LogoWrapper>
-          <Logo />
-        </LogoWrapper>
-      </LogoLink>
-      {image && <StyledImg src={image.src} alt={image.alt} />}
-    </StyledHeader>
-  );
-};
+
+  componentDidMount() {
+    this.setState((currentState) => { // eslint-disable-line react/no-did-mount-set-state
+      let viewportWidth = window.innerWidth * window.devicePixelRatio;
+      if (viewportWidth > 4000) viewportWidth = 4000;
+      if (currentState.viewportWidth !== viewportWidth) {
+        return { viewportWidth };
+      }
+    });
+  }
+
+  render() {
+    return (
+      <StyledHeader>
+        <LogoLink href="/">
+          <LogoWrapper>
+            <Logo />
+          </LogoWrapper>
+        </LogoLink>
+        {this.image && <StyledImg src={`${this.image.src}?w=${this.state.viewportWidth}`} alt={this.image.alt} />}
+      </StyledHeader>
+    );
+  }
+}
 
 Header.defaultProps = {
   images: [],

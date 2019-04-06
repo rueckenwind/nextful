@@ -4,7 +4,8 @@
 import { Fragment } from 'react';
 import { jsx, Global, css } from '@emotion/core';
 
-import normalize from 'normalize.css';
+// import normalize from 'normalize.css';
+import normalize from './normalize.css';
 import globalStyles from './global.css';
 import fonts from './fonts.css';
 
