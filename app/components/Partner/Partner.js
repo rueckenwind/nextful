@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import { H2 } from '../Typography';
-
 import abus from './svgs/abus-logo.svg';
 import bosch from './svgs/bosch-logo.svg';
 import brooksEngland from './svgs/brooks-logo.svg';
@@ -34,7 +32,7 @@ const Partner = () => {
     veloDeVille: 'https://www.velo-de-ville.com/',
   };
 
-  const Grid = styled.div`
+  const Grid = styled.section`
     display: grid;
     grid-gap: 1rem;
     grid-template-columns: 1fr 1fr 1fr;
@@ -49,28 +47,22 @@ const Partner = () => {
   `;
 
   return (
-    <section>
-      <H2>
-        Unsere Partner
-      </H2>
-
-      <Grid>
-        { partners.map((PartnerSvg) => {
-          const hasLink = Object.keys(links).includes(PartnerSvg.name);
-          return (
-            <div key={PartnerSvg.name}>
-              { hasLink ? (
-                <a href={links[PartnerSvg.name]} target="_blank" rel="noopener noreferrer">
-                  <PartnerSvg />
-                </a>
-              ) : (
+    <Grid>
+      { partners.map((PartnerSvg) => {
+        const hasLink = Object.keys(links).includes(PartnerSvg.name);
+        return (
+          <div key={PartnerSvg.name}>
+            { hasLink ? (
+              <a href={links[PartnerSvg.name]} target="_blank" rel="noopener noreferrer">
                 <PartnerSvg />
-              ) }
-            </div>
-          );
-        }) }
-      </Grid>
-    </section>
+              </a>
+            ) : (
+              <PartnerSvg />
+            ) }
+          </div>
+        );
+      }) }
+    </Grid>
   );
 };
 

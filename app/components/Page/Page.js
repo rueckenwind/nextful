@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
+import GlobalStyles from '../GlobalStyles';
 import Header from '../Header';
 import Menu from '../Menu';
-import Template from '../Template';
-import RichText from '../RichText';
 import Footer from '../Footer';
+import Meta from '../Meta/Meta';
 
 const StyledPage = styled.div`
   display: flex;
@@ -14,42 +14,33 @@ const StyledPage = styled.div`
   min-height: 100vh;
 `;
 
-const Page = ({
-  isHome, images, content, additionalContent, sidebar,
-}) => {
+const Page = ({ images, children }) => {
   return (
-    <StyledPage>
-      <Header images={images} />
-      <Menu />
-      <Template
-        isHome={isHome}
-        content={content && <RichText content={content} />}
-        additionalContent={additionalContent}
-        sidebar={sidebar} />
-      <Footer />
-    </StyledPage>
+    <Fragment>
+      <GlobalStyles />
+      <StyledPage>
+        <Meta />
+        <Header images={images} />
+        <Menu />
+        { children }
+        <Footer />
+      </StyledPage>
+    </Fragment>
   );
 };
 
 Page.defaultProps = {
-  isHome: false,
   images: [
     {
       src: 'https://images.ctfassets.net/rdglyrp094mu/6XNtRN11MjJPrKbo1C74sh/ce19af67df4e5942da2be8a2cba8fa7e/fritz-bielmeier-46072-unsplash.jpg', // eslint-disable-line max-len
       alt: '',
     },
   ],
-  content: null,
-  additionalContent: null,
-  sidebar: null,
 };
 
 Page.propTypes = {
-  isHome: PropTypes.bool,
   images: PropTypes.array,
-  content: PropTypes.object,
-  additionalContent: PropTypes.object,
-  sidebar: PropTypes.object,
+  children: PropTypes.node.isRequired,
 };
 
 export default Page;

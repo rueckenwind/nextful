@@ -1,0 +1,59 @@
+{
+	"masterPicture": "_design/rw-ico.png",
+	"iconsPath": "/static/assets/images/favicons",
+	"design": {
+		"ios": {
+			"pictureAspect": "noChange",
+			"assets": {
+				"ios6AndPriorIcons": false,
+				"ios7AndLaterIcons": false,
+				"precomposedIcons": false,
+				"declareOnlyDefaultIcon": true
+			},
+			"appName": "Rückenwind Lübeck"
+		},
+		"desktopBrowser": {},
+		"windows": {
+			"pictureAspect": "noChange",
+			"backgroundColor": "#7c7c7c",
+			"onConflict": "override",
+			"assets": {
+				"windows80Ie10Tile": false,
+				"windows10Ie11EdgeTiles": {
+					"small": false,
+					"medium": true,
+					"big": false,
+					"rectangle": false
+				}
+			},
+			"appName": "Rückenwind Lübeck"
+		},
+		"androidChrome": {
+			"pictureAspect": "noChange",
+			"themeColor": "#72bde9",
+			"manifest": {
+				"name": "Rückenwind",
+				"display": "browser",
+				"orientation": "notSet",
+				"onConflict": "override",
+				"declared": true
+			},
+			"assets": {
+				"legacyIcon": false,
+				"lowResolutionIcons": false
+			}
+		},
+		"safariPinnedTab": {
+			"pictureAspect": "blackAndWhite",
+			"threshold": 93.90625,
+			"themeColor": "#52a3d1"
+		}
+	},
+	"settings": {
+		"scalingAlgorithm": "Lanczos",
+		"errorOnImageTooSmall": false,
+		"readmeFile": false,
+		"htmlCodeFile": false,
+		"usePathAsIs": false
+	}
+}

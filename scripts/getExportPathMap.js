@@ -1,8 +1,15 @@
 const { createClient } = require('contentful');
-const getPageProps = require('./remodel/getPageProps');
-const getNewsProps = require('./remodel/getNewsProps');
-const getBikeProps = require('./remodel/getBikeProps');
-const getSidebarProps = require('./remodel/getSidebarProps');
+const getBikes = require('./remodel/getBikes');
+const getBikeCategories = require('./remodel/getBikeCategories');
+const getBikeFrameShapes = require('./remodel/getBikeFrameShapes');
+const getNews = require('./remodel/getNews');
+const getPages = require('./remodel/getPages');
+
+const { getEntries } = createClient({
+  space: process.env.CONTENTFUL_SPACE_ID,
+  accessToken: process.env.CONTENTFUL_CONTENT_DELIVERY_TOKEN,
+});
+
 
 async function exportPathMap() {
   const staticPages = {
@@ -15,11 +22,6 @@ async function exportPathMap() {
     //   query: { statusCode: 500 },
     // },
   };
-
-  const { getEntries } = createClient({
-    space: process.env.CONTENTFUL_SPACE_ID,
-    accessToken: process.env.CONTENTFUL_CONTENT_DELIVERY_TOKEN,
-  });
 
   const { items: [defaultSidebar] } = await getEntries({
     content_type: 'sidebar',
@@ -41,19 +43,6 @@ async function exportPathMap() {
     throw new Error(e);
   });
 
-  const cleanedNews = resNews.items.map(item => getNewsProps(item));
-
-  const contentfulNews = cleanedNews.reduce((state, current) => {
-    state[`/news/${current.slug}/`] = {
-      page: '/page',
-      query: {
-        ...current,
-        sidebar: getSidebarProps(defaultSidebar),
-      },
-    };
-    return state;
-  }, {});
-
   const resBikes = await getEntries({
     content_type: 'bike',
     limit: 1000,
@@ -62,20 +51,21 @@ async function exportPathMap() {
     throw new Error(e);
   });
 
-  const cleanedBikes = resBikes.items.map(item => getBikeProps(item));
-  const cleanedBikesForList = resBikes.items.map(item => getBikeProps(item, true));
+  const resBikeCategories = await getEntries({
+    content_type: 'bikeCategory',
+    limit: 1000,
+    include: 10,
+  }).catch((e) => {
+    throw new Error(e);
+  });
 
-  const contentfulBikes = cleanedBikes.reduce((state, current) => {
-    state[`/fahrrad/${current.slug}/`] = {
-      page: '/page',
-      query: {
-        ...current,
-        sidebar: getSidebarProps(defaultSidebar),
-      },
-    };
-    return state;
-  }, {});
-
+  const resBikeFrameShapes = await getEntries({
+    content_type: 'bikeFrameShape',
+    limit: 1000,
+    include: 10,
+  }).catch((e) => {
+    throw new Error(e);
+  });
 
   const resPages = await getEntries({
     content_type: 'page',
@@ -85,44 +75,40 @@ async function exportPathMap() {
     throw new Error(e);
   });
 
-  const sortetPages = resPages.items.sort((a, b) => a.fields.url.localeCompare(b.fields.url));
-  const cleanedPages = sortetPages.map(page => getPageProps(page, defaultSidebar));
-  const enhancedPages = cleanedPages.map((page) => {
-    if (page.url && page.url === '/') {
-      page.isHome = true;
-    }
+  const {
+    newsCleaned,
+    newsPages,
+  } = getNews(resNews, defaultSidebar);
 
-    if (page.url && page.url === '/fahrrad/') {
-      page.additionalContent = {
-        id: 'bikes',
-        content: cleanedBikesForList,
-      };
-    }
+  const {
+    bikesCleanedForList,
+    bikesPages,
+  } = getBikes(resBikes, defaultSidebar);
 
-    if (page.url && page.url === '/news/') {
-      page.additionalContent = {
-        id: 'news',
-        content: cleanedNews,
-      };
-    }
-    return page;
-  });
+  const {
+    bikeCategoriesCleaned,
+  } = getBikeCategories(resBikeCategories);
 
-  const contentfulPages = enhancedPages.reduce((state, current) => {
-    state[current.url] = {
-      page: '/page',
-      query: {
-        ...current,
-      },
-    };
-    return state;
-  }, {});
+  const {
+    bikeFrameShapesCleaned,
+  } = getBikeFrameShapes(resBikeFrameShapes);
+
+  const {
+    pages,
+  } = getPages(
+    resPages,
+    defaultSidebar,
+    newsCleaned,
+    bikesCleanedForList,
+    bikeCategoriesCleaned,
+    bikeFrameShapesCleaned,
+  );
 
   return {
     ...staticPages,
-    ...contentfulPages,
-    ...contentfulNews,
-    ...contentfulBikes,
+    ...pages,
+    ...newsPages,
+    ...bikesPages,
   };
 }
 

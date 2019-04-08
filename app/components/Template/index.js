@@ -1,1 +1,6 @@
-export { default } from './Template';
+export {
+  Template,
+  TemplateFilter,
+  TemplateContent,
+  TemplateSidebar,
+} from './Template';

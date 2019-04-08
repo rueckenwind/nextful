@@ -1,5 +1,13 @@
 import styled from '@emotion/styled';
 
+export const HSmall = styled.div`
+  margin-bottom: .5rem;
+  font-size: .75rem;
+  line-height: 1.2;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+`;
+
 export const H1 = styled.h1`
   margin-bottom: .5em;
   font-size: 2rem;

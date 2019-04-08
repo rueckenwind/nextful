@@ -25,6 +25,7 @@ const Content = styled.div`
 
 const WrapImg = styled.a`
   flex-shrink: 0;
+  width: 33.3%;
   margin-left: 1rem;
 `;
 

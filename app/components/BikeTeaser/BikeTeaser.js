@@ -37,35 +37,31 @@ const SubHeader = styled.div`
 
 const bikeLink = slug => `/fahrrad/${slug}/`;
 
-const BikeTeaser = (props) => {
-  console.log(props);
-  const {
-    name, image, slug, category, frameShapes, status,
-  } = props;
-  return (
-    <Teaser href={bikeLink(slug)}>
-      <Img src={`${image.src}?w=200`} alt={image.alt} />
-      <Grid>
-        <H3>{ name }</H3>
+const BikeTeaser = ({
+  name, image, slug, category, frameShapes, status,
+}) => (
+  <Teaser href={bikeLink(slug)}>
+    <Img src={`${image.src}?w=200`} alt={image.alt} />
+    <Grid>
+      <H3>{ name }</H3>
 
-        <div>
-          <SubHeader>Kategorie</SubHeader>
-          { category.name }
-        </div>
+      <div>
+        <SubHeader>Kategorie</SubHeader>
+        { category.name }
+      </div>
 
-        <div>
-          <SubHeader>Rahmenform</SubHeader>
-          { frameShapes.map(frameShape => frameShape.name).join(', ') }
-        </div>
+      <div>
+        <SubHeader>Rahmenform</SubHeader>
+        { frameShapes.map(frameShape => frameShape.name).join(', ') }
+      </div>
 
-        <div>
-          <SubHeader>Status</SubHeader>
-          { status }
-        </div>
-      </Grid>
-    </Teaser>
-  );
-};
+      <div>
+        <SubHeader>Status</SubHeader>
+        { status }
+      </div>
+    </Grid>
+  </Teaser>
+);
 
 BikeTeaser.defaultProps = {
   image: {
@@ -77,11 +73,14 @@ BikeTeaser.defaultProps = {
 
 BikeTeaser.propTypes = {
   name: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
   image: PropTypes.shape({
     src: PropTypes.string,
     alt: PropTypes.string,
   }),
   frameShapes: PropTypes.array,
+  category: PropTypes.object.isRequired,
+  status: PropTypes.string.isRequired,
 };
 
 export default BikeTeaser;
