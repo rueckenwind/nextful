@@ -32,6 +32,7 @@ module.exports = ({ sys, fields } = {}, isTeaser = false) => {
     bikeProps.image = {
       src: image.fields.file.url,
       alt: image.fields.description || image.fields.title,
+      details: image.fields.file.details.image,
     };
   }
 

@@ -5,11 +5,12 @@ module.exports = function getBikes(resBikes, defaultSidebar) {
   const bikesCleaned = resBikes.items.map(item => getBikeProps(item));
   const bikesCleanedForList = resBikes.items.map(item => getBikeProps(item, true));
 
-  const bikesPages = bikesCleaned.reduce((state, current) => {
-    state[`/fahrrad/${current.slug}/`] = {
-      page: '/page',
+  const bikesPages = bikesCleaned.reduce((state, { slug, content, ...bike }) => {
+    state[`/fahrrad/${slug}/`] = {
+      page: '/pageBike',
       query: {
-        ...current,
+        content,
+        bike,
         sidebar: getSidebarProps(defaultSidebar),
       },
     };
