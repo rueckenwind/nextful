@@ -86,7 +86,7 @@ const navItems = [
   },
   {
     title: 'Fahrräder',
-    href: '/fahrrad/',
+    href: '/fahrraeder/',
   },
   {
     title: 'News',

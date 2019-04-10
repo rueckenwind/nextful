@@ -1,6 +1,7 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
+import PropTypes from 'prop-types';
 
 import Page from '../app/components/Page';
 import {
@@ -39,6 +40,22 @@ const CfPage = ({
     </BikeFilterProvider>
   </Page>
 );
+
+CfPage.defaultProps = {
+  images: [
+    {
+      src: 'https://images.ctfassets.net/rdglyrp094mu/6XNtRN11MjJPrKbo1C74sh/ce19af67df4e5942da2be8a2cba8fa7e/fritz-bielmeier-46072-unsplash.jpg', // eslint-disable-line max-len
+      alt: '',
+    },
+  ],
+};
+
+CfPage.propTypes = {
+  images: PropTypes.array,
+  bikes: PropTypes.array.isRequired,
+  bikeFilter: PropTypes.object.isRequired,
+  sidebar: PropTypes.object.isRequired,
+};
 
 CfPage.getInitialProps = async ({ query }) => query;
 

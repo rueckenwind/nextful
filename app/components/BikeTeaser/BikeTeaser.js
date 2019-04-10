@@ -10,17 +10,21 @@ import times from '../../js/times';
 const Teaser = styled.a`
   display: grid;
   grid-template-columns: 33% auto;
-  grid-gap: 1rem;
+  grid-column-gap: 1rem;
+  color: inherit;
+  text-decoration: none;
+`;
+const TeaserSmall = styled.a`
   color: inherit;
   text-decoration: none;
 `;
 
 const Img = styled.img`
-  margin-right: 1rem;
   border: 1px solid ${colors.graylightest};
   transition: border-color ${times.transition};
 
-  ${Teaser}:hover & {
+  ${Teaser}:hover &,
+  ${TeaserSmall}:hover & {
     border-color: ${colors.blue};
   }
 `;
@@ -37,32 +41,72 @@ const SubHeader = styled.div`
 
 const bikeLink = slug => `/fahrrad/${slug}/`;
 
-const BikeTeaser = ({
+export const BikeTeaserImg = ({ image, slug }) => {
+  const img = image && {
+    x1: `${image.src}?w=200&h=200&fit=fill`,
+    x2: `${image.src}?w=400&h=400&fit=fill`,
+  };
+
+  return (
+    <TeaserSmall href={bikeLink(slug)}>
+      <Img
+        src={img.x1}
+        srcSet={`${img.x1} 1x, ${img.x2} 2x`}
+        alt={image.alt} />
+    </TeaserSmall>
+  );
+};
+
+BikeTeaserImg.defaultProps = {
+  image: {
+    src: defaultBikeImg,
+    alt: 'Default Bike Image',
+  },
+};
+
+BikeTeaserImg.propTypes = {
+  slug: PropTypes.string.isRequired,
+  image: PropTypes.shape({
+    src: PropTypes.string,
+    alt: PropTypes.string,
+  }),
+};
+
+export const BikeTeaser = ({
   name, image, slug, category, frameShapes, status,
-}) => (
-  <Teaser href={bikeLink(slug)}>
-    <Img src={`${image.src}?w=200`} alt={image.alt} />
-    <Grid>
-      <H3>{ name }</H3>
+}) => {
+  const img = image && {
+    x1: `${image.src}?w=200&h=200&fit=fill`,
+    x2: `${image.src}?w=400&h=400&fit=fill`,
+  };
 
-      <div>
-        <SubHeader>Kategorie</SubHeader>
-        { category.name }
-      </div>
+  return (
+    <Teaser href={bikeLink(slug)}>
+      <Img
+        src={img.x1}
+        srcSet={`${img.x1} 1x, ${img.x2} 2x`}
+        alt={image.alt} />
+      <Grid>
+        <H3>{ name }</H3>
 
-      <div>
-        <SubHeader>Rahmenform</SubHeader>
-        { frameShapes.map(frameShape => frameShape.name).join(', ') }
-      </div>
+        <div>
+          <SubHeader>Kategorie</SubHeader>
+          { category.name }
+        </div>
 
-      <div>
-        <SubHeader>Status</SubHeader>
-        { status }
-      </div>
-    </Grid>
-  </Teaser>
-);
+        <div>
+          <SubHeader>Rahmenform</SubHeader>
+          { frameShapes.map(frameShape => frameShape.name).join(', ') }
+        </div>
 
+        <div>
+          <SubHeader>Status</SubHeader>
+          { status }
+        </div>
+      </Grid>
+    </Teaser>
+  );
+};
 BikeTeaser.defaultProps = {
   image: {
     src: defaultBikeImg,
@@ -82,5 +126,3 @@ BikeTeaser.propTypes = {
   category: PropTypes.object.isRequired,
   status: PropTypes.string.isRequired,
 };
-
-export default BikeTeaser;

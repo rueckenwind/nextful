@@ -9,14 +9,10 @@ module.exports = function getPages(res, sidebar, news, bikes, bikeCategories, bi
     if (page.url && page.url === '/') {
       page.template = '/pageHome';
       [page.currentNews] = news;
-      page.latestBikes = [
-        bikes[0],
-        bikes[1],
-        bikes[2],
-      ];
+      page.latestBikes = bikes.slice(0, 3);
     }
 
-    if (page.url && page.url === '/fahrrad/') {
+    if (page.url && page.url === '/fahrraeder/') {
       page.template = '/pageBikes';
       page.bikes = bikes;
       page.bikeFilter = {

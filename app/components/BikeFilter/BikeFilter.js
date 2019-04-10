@@ -1,7 +1,10 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+/** @jsx jsx */
+
+import { jsx } from '@emotion/core';
+
+import { Fragment } from 'react';
 import styled from '@emotion/styled';
-import Select from 'react-select';
+import { Select } from '../Form';
 import { H2 } from '../Typography';
 import { BikeFilterConsumer } from '../BikeFilterContext';
 
@@ -21,56 +24,71 @@ const ItemHeadline = styled.div`
   font-weight: bold;
 `;
 
+const inputComponents = {
+  select: Select,
+};
+
 const BikeFilter = () => (
   <BikeFilterConsumer>
     {({
       handleChange,
-      categories,
-      frameShapes,
+      category,
+      frameShape,
       bikeCategories = [],
       bikeFrameShapes = [],
     } = {}) => {
-      const optionsCategories = bikeCategories.map(cat => ({
-        label: cat.name,
-        value: cat.id,
-      }));
+      const values = {
+        category,
+        frameShape,
+      };
 
-      const optionsFrameShapes = bikeFrameShapes.map(cat => ({
-        label: cat.name,
-        value: cat.id,
+      const filterList = [
+        {
+          id: 'category',
+          name: 'Kategorie',
+          type: 'select',
+          options: bikeCategories.map(({ name: label, id: value }) => ({ label, value })),
+          isMulti: true,
+        },
+        {
+          id: 'frameShape',
+          name: 'Rahmenform',
+          type: 'select',
+          options: bikeFrameShapes.map(({ name: label, id: value }) => ({ label, value })),
+          isMulti: true,
+        },
+      ];
+
+      const enhancedFilterList = filterList.map(item => ({
+        ...item,
+        value: values[item.id].map(i => item.options.find(({ value }) => value === i)),
       }));
 
       return (
         <Fragment>
           <H2>Filter</H2>
           <Wrapper>
-            <Item>
-              <ItemHeadline>Kategorie</ItemHeadline>
-              <Select
-                value={categories}
-                onChange={sel => handleChange('categories', sel)}
-                options={optionsCategories}
-                instanceId={42}
-                isMulti />
-            </Item>
-
-            <Item>
-              <ItemHeadline>Rahmenform</ItemHeadline>
-              <Select
-                value={frameShapes}
-                onChange={sel => handleChange('frameShapes', sel)}
-                options={optionsFrameShapes}
-                instanceId={42 + 1}
-                isMulti />
-            </Item>
+            { enhancedFilterList.map(({
+                id, name, type, value, options, isMulti,
+              }) => {
+              const Input = inputComponents[type];
+              return (
+                <Item key={id}>
+                  <ItemHeadline>{ name }</ItemHeadline>
+                  <Input
+                    value={value}
+                    options={options}
+                    onChange={e => handleChange(id, e)}
+                    isMulti={isMulti}
+                    instanceId={id} />
+                </Item>
+              );
+            }) }
           </Wrapper>
         </Fragment>
       );
     }}
   </BikeFilterConsumer>
 );
-
-BikeFilter.propTypes = {
-};
 
 export default BikeFilter;

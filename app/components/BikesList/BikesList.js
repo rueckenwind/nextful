@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { H1 } from '../Typography';
-import BikeTeaser from '../BikeTeaser/BikeTeaser';
+import { BikeTeaser } from '../BikeTeaser/BikeTeaser';
 import { BikeFilterConsumer } from '../BikeFilterContext/BikeFilterContext';
 
 const Grid = styled.div`

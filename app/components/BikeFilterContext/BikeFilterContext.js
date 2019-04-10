@@ -1,22 +1,68 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { getSession, setSession } from '../../js/session';
 
 const BikeFilterContext = React.createContext();
+
+const SESSION_ID = 'bikefilter';
 
 export class BikeFilterProvider extends PureComponent {
   constructor() {
     super();
     this.state = {
-      categories: [],
-      frameShapes: [],
+      category: [],
+      frameShape: [],
     };
   }
 
-  handleChange = (key, selectedOption) => {
-    console.log('Option selected:', selectedOption, key);
-    this.setState({ [key]: selectedOption });
-  };
+  componentDidMount() {
+    // this.getParamsFromUrl();
+    this.getParamsFromSession();
+  }
 
+  componentDidUpdate() {
+    // this.setStateToUrl();
+    this.setStateToSession();
+  }
+
+  getParamsFromSession = () => {
+    const sessionParams = getSession(SESSION_ID);
+
+    this.setState((currentState) => {
+      if (sessionParams !== currentState) {
+        return sessionParams;
+      }
+    });
+  }
+
+  setStateToSession = () => {
+    setSession(SESSION_ID, this.state);
+  }
+
+  // getParamsFromUrl = () => {
+  //   const urlSearchParams = qs.parse(window.location.search.substring(1));
+
+  //   this.setState((currentState) => {
+  //     if (urlSearchParams !== currentState) {
+  //       return urlSearchParams;
+  //     }
+  //   });
+  // }
+
+  // setStateToUrl = () => {
+  //   const urlSearchParams = qs.parse(window.location.search.substring(1));
+  //   const paramString = qs.stringify(this.state, { arrayFormat: 'brackets' });
+
+  //   if (urlSearchParams !== this.state && paramString) {
+  //     window.history.pushState(null, 'tadaa', `${window.location.pathname}?${paramString}`);
+  //   }
+  // }
+
+  handleChange = (key, selectedOption, isMulti = true) => {
+    const stateValue = !isMulti ? selectedOption.value : selectedOption.map(opt => opt.value);
+
+    this.setState({ [key]: stateValue });
+  };
 
   render() {
     const { handleChange } = this;
@@ -27,13 +73,13 @@ export class BikeFilterProvider extends PureComponent {
 
     const filteredBikes = !this.props.bikes ? [] : this.props.bikes
       .filter((bike) => {
-        if (!this.state.categories.length) return true;
-        return this.state.categories.some(category => category.value === bike.category.id);
+        if (!this.state.category.length) return true;
+        return this.state.category.some(category => category === bike.category.id);
       })
       .filter((bike) => {
-        if (!this.state.frameShapes.length) return true;
+        if (!this.state.frameShape.length) return true;
         return bike.frameShapes.some(shape =>
-          this.state.frameShapes.some(frameShape => frameShape.value === shape.id));
+          this.state.frameShape.some(frameShape => frameShape === shape.id));
       });
 
     return (
