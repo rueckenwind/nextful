@@ -146,7 +146,7 @@ workflows:
               only: /.*/
       - deploy-master:
           requires:
-            - build
+            - test-html
           filters:
             branches:
               only: master
