@@ -7,12 +7,12 @@ module.exports = ({ sys, fields } = {}, isTeaser = false) => {
     content,
     category,
     frameShapes,
-    color,
+    colors,
     status,
   } = fields;
 
   console.log({
-    frameShapes,
+    colors,
   });
 
   if (!slug) {

@@ -89,7 +89,7 @@ const Table = styled.table`
 `;
 
 const Tr = styled.tr`
-  :nth-child(odd) {
+  :nth-of-type(odd) {
     background-color: ${colors.graylightest};
   }
 `;

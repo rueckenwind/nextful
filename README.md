@@ -1,6 +1,6 @@
-# Rueckenwind Website v8 aka. Nextful
+# Rueckenwind Website v8 aka. cyclon
 
-[![CircleCI](https://circleci.com/gh/rueckenwind/nextful/tree/master.svg?style=svg)](https://circleci.com/gh/rueckenwind/nextful/tree/master)
+[![CircleCI](https://circleci.com/gh/rueckenwind/cyclon/tree/master.svg?style=svg)](https://circleci.com/gh/rueckenwind/cyclon/tree/master)
 
 ## Setup
 
