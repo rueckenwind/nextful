@@ -104,7 +104,7 @@ const Td = styled.td`
   }
 `;
 
-export const BikeDetails = ({ category, frameShapes, status }) => {
+export const BikeDetails = ({ category, frameShapes = [], status }) => {
   const details = [
     {
       title: 'Kategorie',
