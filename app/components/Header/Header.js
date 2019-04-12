@@ -70,7 +70,7 @@ class Header extends PureComponent {
 
   componentDidMount() {
     this.setState((currentState) => { // eslint-disable-line react/no-did-mount-set-state
-      let viewportWidth = window.innerWidth * window.devicePixelRatio;
+      let viewportWidth = Math.floor(window.innerWidth * window.devicePixelRatio);
       if (viewportWidth > 4000) viewportWidth = 4000;
       if (currentState.viewportWidth !== viewportWidth) {
         return { viewportWidth };
