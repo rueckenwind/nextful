@@ -8,7 +8,7 @@ if (error) {
 }
 
 module.exports = {
-  env,
+  env: env || process.ENV,
   exportPathMap,
   webpack: (webpackConfig) => {
     webpackConfig.module.rules.push({
