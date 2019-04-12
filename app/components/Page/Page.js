@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import Head from 'next/head';
 import styled from '@emotion/styled';
 
 import GlobalStyles from '../GlobalStyles';
@@ -17,9 +18,16 @@ const StyledPage = styled.div`
 const Page = ({ images, children }) => {
   return (
     <Fragment>
+      <Meta />
+      <Head>
+        <link rel="prefetch" href="https://fonts.gstatic.com/s/opensans/v16/mem5YaGs126MiZpBA-UN_r8OUuhpKKSTjw.woff2" />
+        <link rel="prefetch" href="https://fonts.gstatic.com/s/opensans/v16/mem8YaGs126MiZpBA-UFVZ0bf8pkAg.woff2" />
+        <link rel="prefetch" href="https://fonts.gstatic.com/s/opensans/v16/mem5YaGs126MiZpBA-UNirkOUuhpKKSTjw.woff2" />
+      </Head>
+
       <GlobalStyles />
+
       <StyledPage>
-        <Meta />
         <Header images={images} />
         <Menu />
         { children }
