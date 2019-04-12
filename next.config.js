@@ -13,7 +13,7 @@ const config = {
     });
 
     webpackConfig.module.rules.push({
-      test: /\.(jpe?g|png|gif)$/,
+      test: /\.(jpe?g|png|gif|webp)$/,
       use: [{
         loader: 'url-loader',
         options: {

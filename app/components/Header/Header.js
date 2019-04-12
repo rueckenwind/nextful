@@ -5,6 +5,7 @@ import viewportsJs from '../../js/viewports.json';
 import colors from '../../js/colors';
 
 import Logo from './Logo';
+import { Img } from '../Img';
 
 const StyledHeader = styled.header`
   position: relative;
@@ -43,7 +44,7 @@ const LogoWrapper = styled.div`
   }
 `;
 
-const StyledImg = styled.img`
+const StyledImg = styled(Img)`
   width: 100%;
   height: calc(100vw / 3);
   background-color: ${colors.graydark};
@@ -89,6 +90,7 @@ class Header extends PureComponent {
         { this.image && (
           <StyledImg
             src={`${this.image.src}?w=${this.state.viewportWidth}&fm=jpg&q=85&fl=progressive`}
+            srcWebp={`${this.image.src}?w=${this.state.viewportWidth}&fm=webp`}
             alt={this.image.alt} />
         ) }
       </StyledHeader>
