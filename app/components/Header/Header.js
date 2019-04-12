@@ -88,7 +88,7 @@ class Header extends PureComponent {
         </LogoLink>
         { this.image && (
           <StyledImg
-            src={`${this.image.src}?w=${this.state.viewportWidth}&fm=jpg&fl=progressive`}
+            src={`${this.image.src}?w=${this.state.viewportWidth}&fm=jpg&q=85&fl=progressive`}
             alt={this.image.alt} />
         ) }
       </StyledHeader>

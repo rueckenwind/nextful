@@ -43,8 +43,8 @@ const News = ({
   const link = `/news/${slug}/`;
 
   const img = image && {
-    x1: `${image.src}?w=200&h=200&fit=fill`,
-    x2: `${image.src}?w=400&h=400&fit=fill`,
+    x1: `${image.src}?w=200&h=200&fit=fill&fm=jpg&q=85&fl=progressive`,
+    x2: `${image.src}?w=400&h=400&fit=fill&fm=jpg&q=85&fl=progressive`,
   };
 
   const checkedContent = !isExerpt ? content : {
