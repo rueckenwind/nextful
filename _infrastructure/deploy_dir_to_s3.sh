@@ -34,11 +34,11 @@ print "Starting deploying the local directory $SOURCE_DIR to the S3 target direc
 
 print "Sync normal files"
 
-aws s3 sync $SOURCE_DIR $S3_TARGET_DIR --region eu-central-1 --include "*" --exclude "*.css" --exclude "*.js" --exclude "*.png" --exclude "*.jpg" --exclude "*.jpeg" --exclude "*.gif" --exclude "*.ico" --exclude "*.svg"
+aws s3 sync $SOURCE_DIR $S3_TARGET_DIR --region eu-central-1 --include "*" --exclude "*.css" --exclude "*.js" --exclude "*.png" --exclude "*.jpg" --exclude "*.jpeg" --exclude "*.gif" --exclude "*.ico" --exclude "*.svg" --exclude "*.webp"
 
 print "Sync long cacheable files"
 
-aws s3 sync $SOURCE_DIR $S3_TARGET_DIR --region eu-central-1 --cache-control "max-age=315360000" --exclude "*" --include "*.css" --include "*.js" --include "*.png" --include "*.jpg" --include "*.jpeg" --include "*.gif" --include "*.ico" --include "*.svg"
+aws s3 sync $SOURCE_DIR $S3_TARGET_DIR --region eu-central-1 --cache-control "max-age=315360000" --exclude "*" --include "*.css" --include "*.js" --include "*.png" --include "*.jpg" --include "*.jpeg" --include "*.gif" --include "*.ico" --include "*.svg" --include "*.webp"
 
 if [ ! -z "$CLOUDFRONT_DISTRIBUTION_ID" ]; then
 
