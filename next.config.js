@@ -2,21 +2,7 @@ const getExportPathMap = require('./scripts/getExportPathMap');
 
 const exportPathMap = async () => getExportPathMap();
 
-let env = process.ENV;
-
-if (process.env.NODE_ENV !== 'production') {
-  // eslint-disable-next-line global-require
-  const { error, parsed: localEnv } = require('dotenv').config();
-
-  if (error) {
-    throw error;
-  }
-  env = localEnv;
-}
-
-
-module.exports = {
-  env: env || process.ENV,
+const config = {
   exportPathMap,
   webpack: (webpackConfig) => {
     webpackConfig.module.rules.push({
@@ -43,3 +29,18 @@ module.exports = {
     return webpackConfig;
   },
 };
+
+
+if (process.env.NODE_ENV !== 'production') {
+  // eslint-disable-next-line global-require
+  const { error, parsed: localEnv } = require('dotenv').config();
+
+  if (error) {
+    throw error;
+  }
+
+  config.env = localEnv;
+}
+
+
+module.exports = config;
