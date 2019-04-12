@@ -70,7 +70,7 @@ class Header extends PureComponent {
 
   componentDidMount() {
     this.setState((currentState) => { // eslint-disable-line react/no-did-mount-set-state
-      let viewportWidth = Math.floor(window.innerWidth * window.devicePixelRatio);
+      let viewportWidth = Math.floor((window.innerWidth * window.devicePixelRatio) - 20);
       if (viewportWidth > 4000) viewportWidth = 4000;
       if (currentState.viewportWidth !== viewportWidth) {
         return { viewportWidth };
@@ -86,7 +86,11 @@ class Header extends PureComponent {
             <Logo />
           </LogoWrapper>
         </LogoLink>
-        {this.image && <StyledImg src={`${this.image.src}?w=${this.state.viewportWidth}`} alt={this.image.alt} />}
+        { this.image && (
+          <StyledImg
+            src={`${this.image.src}?w=${this.state.viewportWidth}?fm=jpg&fl=progressive`}
+            alt={this.image.alt} />
+        ) }
       </StyledHeader>
     );
   }
