@@ -1,7 +1,11 @@
-const { parsed: env } = require('dotenv').config();
+const { error, parsed: env } = require('dotenv').config();
 const getExportPathMap = require('./scripts/getExportPathMap');
 
 const exportPathMap = async () => getExportPathMap();
+
+if (error) {
+  throw error;
+}
 
 module.exports = {
   env,
