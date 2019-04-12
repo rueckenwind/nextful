@@ -104,7 +104,7 @@ jobs:
           command: sudo pip install awscli
       - run:
           name: Deploy to S3
-          command: aws s3 sync out s3://rueckenwind.schoen.world/website/production --region eu-central-1
+          command: SOURCE_DIR="out" S3_TARGET_DIR="s3://rueckenwind.schoen.world/website/production" _infrastructure/deploy_dir_to_s3.sh
       - run:
           name: Invalidate cache
           command: aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
