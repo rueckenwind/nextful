@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
 import { H3 } from '../Typography';
+import { Img as ImgUnstyled } from '../Img';
 import defaultBikeImg from './bike.png';
 import colors from '../../js/colors';
 import times from '../../js/times';
@@ -19,7 +20,7 @@ const TeaserSmall = styled.a`
   text-decoration: none;
 `;
 
-const Img = styled.img`
+const Img = styled(ImgUnstyled)`
   border: 1px solid ${colors.graylightest};
   transition: border-color ${times.transition};
 
@@ -42,16 +43,15 @@ const SubHeader = styled.div`
 const bikeLink = slug => `/fahrrad/${slug}/`;
 
 export const BikeTeaserImg = ({ image, slug }) => {
-  const img = image && {
-    x1: `${image.src}?w=200&h=200&fit=fill`,
-    x2: `${image.src}?w=400&h=400&fit=fill`,
-  };
+  const img = `${image.src}?w=200&h=200&fit=fill&fm=jpg&q=85&fl=progressive`;
+  const imgWebp = `${image.src}?w=200&h=200&fit=fill&fm=webp`;
+
 
   return (
     <TeaserSmall href={bikeLink(slug)}>
       <Img
-        src={img.x1}
-        srcSet={`${img.x1} 1x, ${img.x2} 2x`}
+        src={img}
+        srcWebp={imgWebp}
         alt={image.alt} />
     </TeaserSmall>
   );
@@ -75,16 +75,14 @@ BikeTeaserImg.propTypes = {
 export const BikeTeaser = ({
   name, image, slug, category, frameShapes, status,
 }) => {
-  const img = image && {
-    x1: `${image.src}?w=200&h=200&fit=fill`,
-    x2: `${image.src}?w=400&h=400&fit=fill`,
-  };
+  const img = `${image.src}?w=200&h=200&fit=fill&fm=jpg&q=85&fl=progressive`;
+  const imgWebp = `${image.src}?w=200&h=200&fit=fill&fm=webp`;
 
   return (
     <Teaser href={bikeLink(slug)}>
       <Img
-        src={img.x1}
-        srcSet={`${img.x1} 1x, ${img.x2} 2x`}
+        src={img}
+        srcWebp={imgWebp}
         alt={image.alt} />
       <Grid>
         <H3>{ name }</H3>

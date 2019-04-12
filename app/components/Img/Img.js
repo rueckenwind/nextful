@@ -25,3 +25,7 @@ Img.propTypes = {
   className: PropTypes.string,
   srcWebp: PropTypes.string,
 };
+
+// export const ImgContentful = ({ width, height, ...props }) => {
+//   return <img />;
+// };

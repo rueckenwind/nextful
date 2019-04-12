@@ -42,10 +42,8 @@ const News = ({
 }) => {
   const link = `/news/${slug}/`;
 
-  const img = image && {
-    x1: `${image.src}?w=200&h=200&fit=fill&fm=jpg&q=85&fl=progressive`,
-    x2: `${image.src}?w=400&h=400&fit=fill&fm=jpg&q=85&fl=progressive`,
-  };
+  const img = image && `${image.src}?w=200&h=200&fit=fill&fm=jpg&q=85&fl=progressive`;
+  const imgWebp = image && `${image.src}?w=200&h=200&fit=fill&fm=webp`;
 
   const checkedContent = !isExerpt ? content : {
     ...content,
@@ -64,8 +62,8 @@ const News = ({
       </Content>
       <WrapImg href={link}>
         <Img
-          src={img.x1}
-          srcSet={`${img.x1} 1x, ${img.x2} 2x`}
+          src={img}
+          srcWebp={imgWebp}
           alt={image.alt} />
       </WrapImg>
     </StyledNews>

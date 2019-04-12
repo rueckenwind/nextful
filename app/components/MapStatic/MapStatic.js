@@ -4,8 +4,6 @@ import { Img } from '../Img';
 import mapSrcPng from './map.png';
 import mapSrcWebp from './map.webp';
 
-console.log(Img);
-
 const MapStatic = () => (
   <a style={{ display: 'block' }} href="https://bit.ly/rw_map" target="_blank" rel="noopener noreferrer">
     <Img
