@@ -1,11 +1,19 @@
-const { error, parsed: env } = require('dotenv').config();
 const getExportPathMap = require('./scripts/getExportPathMap');
 
 const exportPathMap = async () => getExportPathMap();
 
-if (error) {
-  throw error;
+let env = process.ENV;
+
+if (process.env.NODE_ENV !== 'production') {
+  // eslint-disable-next-line global-require
+  const { error, parsed: localEnv } = require('dotenv').config();
+
+  if (error) {
+    throw error;
+  }
+  env = localEnv;
 }
+
 
 module.exports = {
   env: env || process.ENV,
