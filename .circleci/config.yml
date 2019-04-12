@@ -75,7 +75,7 @@ jobs:
           name: Export static files
           command: |
             set -x
-            npm run export-ci
+            npm run export
       - run:
           name: Minify html
           command: |
