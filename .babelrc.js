@@ -11,7 +11,7 @@ module.exports = {
           attributes: [
             'width="100%"',
             'height="100%"',
-            'preserveAspectRatio="xMinYMid meet"',
+            'preservesspectratio="xMinYMid meet"',
           ]
         }}]
       }
