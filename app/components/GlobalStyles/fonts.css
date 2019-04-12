@@ -2,6 +2,7 @@
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 300;
+  font-display: swap;
   src:
     local('Open Sans Light'),
     local('OpenSans-Light'),
@@ -12,6 +13,7 @@
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
+  font-display: swap;
   src:
     local('Open Sans Regular'),
     local('OpenSans-Regular'),
@@ -22,6 +24,7 @@
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 600;
+  font-display: swap;
   src:
     local('Open Sans SemiBold'),
     local('OpenSans-SemiBold'),
