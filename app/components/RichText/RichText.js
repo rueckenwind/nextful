@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 
-import { H1, H2, H3, UL, OL, LI, P, HR } from '../Typography';
+import {
+  H1, H2, H3, UL, OL, LI, P, HR,
+} from '../Typography';
 import Link from '../Link';
 import MapStatic from '../MapStatic';
 import { OpeningHours, OpenStatus } from '../OpeningHours';

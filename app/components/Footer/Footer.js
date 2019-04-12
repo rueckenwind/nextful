@@ -81,7 +81,11 @@ const Footer = () => {
           </FooterNav>
 
           <div>
-            &copy; 2008 - { new Date().getFullYear()} Rückenwind Lübeck
+            &copy; 2008 -
+            {' '}
+            { new Date().getFullYear()}
+            {' '}
+Rückenwind Lübeck
           </div>
         </FooterContent>
       </MaxWidth>

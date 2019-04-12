@@ -67,19 +67,19 @@ export class BikeFilterProvider extends PureComponent {
   render() {
     const { handleChange } = this;
     const {
+      bikes,
       bikeCategories,
       bikeFrameShapes,
     } = this.props;
 
-    const filteredBikes = !this.props.bikes ? [] : this.props.bikes
+    const filteredBikes = !bikes ? [] : bikes
       .filter((bike) => {
         if (!this.state.category.length) return true;
         return this.state.category.some(category => category === bike.category.id);
       })
       .filter((bike) => {
         if (!this.state.frameShape.length) return true;
-        return bike.frameShapes.some(shape =>
-          this.state.frameShape.some(frameShape => frameShape === shape.id));
+        return bike.frameShapes.some(shape => this.state.frameShape.some(frameShape => frameShape === shape.id));
       });
 
     return (

@@ -25,7 +25,7 @@ const CfPage = ({
 }) => (
   <Page images={images}>
     <Template>
-      <TemplateContent templateHasSidebar={!!sidebar} >
+      <TemplateContent templateHasSidebar={!!sidebar}>
         <ContentBox>
           <HSmall>Unsere Partner</HSmall>
           <Partner />

@@ -25,7 +25,7 @@ const CfPage = ({
       <Template>
         <TemplateFilter />
 
-        <TemplateContent templateHasSidebar={!!sidebar} >
+        <TemplateContent templateHasSidebar={!!sidebar}>
           <ContentBox>
             <BikeFilterConsumer>
               {({ bikes: filteredBikes } = {}) => (

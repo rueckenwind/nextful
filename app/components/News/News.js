@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
-import viewportsJs from '../../js/viewports.json';
 import colors from '../../js/colors';
 
 import { H3 } from '../Typography';

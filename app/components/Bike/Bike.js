@@ -76,9 +76,11 @@ export const BikeImage = ({ src, alt, details }) => {
 };
 
 BikeImage.propTypes = {
-  image: PropTypes.shape({
-    src: PropTypes.string,
-    alt: PropTypes.string,
+  src: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  details: PropTypes.shape({
+    width: PropTypes.number,
+    height: PropTypes.number,
   }).isRequired,
 };
 
@@ -102,21 +104,19 @@ const Td = styled.td`
   }
 `;
 
-export const BikeDetails = (props) => {
-  console.log(props);
-
+export const BikeDetails = ({ category, frameShapes, status }) => {
   const details = [
     {
       title: 'Kategorie',
-      value: props.category.name,
+      value: category.name,
     },
     {
-      title: `Rahmenform${!!props.frameShapes.length > 1 ? 'en' : ''}`,
-      value: props.frameShapes.map(({ name }) => name).sort().join(', '),
+      title: `Rahmenform${!!frameShapes.length > 1 ? 'en' : ''}`,
+      value: frameShapes.map(({ name }) => name).sort().join(', '),
     },
     {
       title: 'Status',
-      value: props.status,
+      value: status,
     },
   ];
 
@@ -132,3 +132,11 @@ export const BikeDetails = (props) => {
   );
 };
 
+BikeDetails.propTypes = {
+  category: PropTypes.shape({
+    name: PropTypes.string,
+    id: PropTypes.string,
+  }).isRequired,
+  frameShapes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  status: PropTypes.string.isRequired,
+};

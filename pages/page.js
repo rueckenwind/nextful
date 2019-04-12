@@ -17,7 +17,7 @@ const CfPage = ({
 }) => (
   <Page images={images}>
     <Template>
-      <TemplateContent templateHasSidebar={!!sidebar} >
+      <TemplateContent templateHasSidebar={!!sidebar}>
         <ContentBox>
           <RichText content={content} />
         </ContentBox>

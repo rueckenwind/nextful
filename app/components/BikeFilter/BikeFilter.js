@@ -69,8 +69,8 @@ const BikeFilter = () => (
           <H2>Filter</H2>
           <Wrapper>
             { enhancedFilterList.map(({
-                id, name, type, value, options, isMulti,
-              }) => {
+              id, name, type, value, options, isMulti,
+            }) => {
               const Input = inputComponents[type];
               return (
                 <Item key={id}>
