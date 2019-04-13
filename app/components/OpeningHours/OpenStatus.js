@@ -95,7 +95,7 @@ const Status = styled.div`
   padding: 1.25rem;
   font-size: .9rem;
   color: #fff;
-  background-color: ${({ status }) => (status ? colors.green : colors.red)};
+  background-color: ${({ status }) => (status ? colors.greenDark : colors.red)};
 `;
 
 const OpenStatus = () => {
