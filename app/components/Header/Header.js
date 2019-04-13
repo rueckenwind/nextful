@@ -84,7 +84,7 @@ class Header extends PureComponent {
   render() {
     return (
       <StyledHeader>
-        <LogoLink href="/">
+        <LogoLink href="/" title="Zur Startseite">
           <LogoWrapper>
             <Logo />
           </LogoWrapper>
