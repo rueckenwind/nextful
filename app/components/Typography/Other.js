@@ -7,6 +7,6 @@ export const P = styled.p`
 
 export const HR = styled.hr`
   height: 1px;
-  background-color: ${colors.bluelight};
+  background-color: ${colors.blueLight};
   border: 0;
 `;

@@ -47,7 +47,7 @@ const LogoWrapper = styled.div`
 const StyledImg = styled(Img)`
   width: 100%;
   height: calc(100vw / 3);
-  background-color: ${colors.graydark};
+  background-color: ${colors.grayDark};
   object-fit: cover;
 
   @media ${viewportsJs.xs} {

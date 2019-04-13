@@ -6,7 +6,7 @@ import times from '../../js/times';
 import colors from '../../js/colors';
 
 const A = styled.a`
-  color: ${colors.blue};
+  color: ${colors.blueDark};
   text-decoration: none;
   cursor: pointer;
   transition: ${times.transition};

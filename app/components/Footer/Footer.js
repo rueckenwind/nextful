@@ -11,7 +11,7 @@ const StyledFooter = styled.footer`
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
   color: #fff;
-  background-color: ${colors.blue};
+  background-color: ${colors.blueDark};
 
   @media ${viewportsJs.sm} {
     padding-top: .5rem;
