@@ -36,11 +36,11 @@ export const ImgContentful = ({
 }) => {
   const params = {
     fit,
+    q: 70,
   };
 
   const jpgParams = {
     fm: 'jpg',
-    q: 85,
     fl: 'progressive',
   };
 

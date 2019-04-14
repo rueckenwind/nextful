@@ -46,8 +46,8 @@ export const BikeTeaserImg = ({ image, slug }) => (
   <TeaserSmall href={bikeLink(slug)}>
     <ImgWrap>
       <ImgContentful
-        width="220"
-        height="220"
+        width={220}
+        height={220}
         fit="fill"
         src={image.src}
         alt={image.alt} />
@@ -75,8 +75,8 @@ export const BikeTeaser = ({
 }) => (
   <Teaser href={bikeLink(slug)}>
     <ImgContentful
-      width="220"
-      height="220"
+      width={220}
+      height={220}
       fit="fill"
       src={image.src}
       alt={image.alt} />

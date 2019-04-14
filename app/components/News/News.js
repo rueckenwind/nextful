@@ -56,8 +56,8 @@ const News = ({
       </Content>
       <WrapImg href={link}>
         <ImgContentful
-          width="220"
-          height="220"
+          width={220}
+          height={220}
           fit="fill"
           src={image.src}
           alt={image.alt} />
