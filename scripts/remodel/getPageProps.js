@@ -4,7 +4,7 @@ module.exports = ({ sys, fields } = {}, defaultSidebar) => {
   const { id } = sys;
   const {
     url,
-    images,
+    image,
     content,
     sidebar = defaultSidebar,
   } = fields;
@@ -18,11 +18,11 @@ module.exports = ({ sys, fields } = {}, defaultSidebar) => {
     id,
   };
 
-  if (images) {
-    pageProps.images = images.map(image => ({
+  if (image) {
+    pageProps.image = {
       src: image.fields.file.url,
       alt: image.fields.description || image.fields.title,
-    }));
+    };
   }
 
   if (content) {

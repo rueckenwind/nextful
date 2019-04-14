@@ -15,7 +15,7 @@ const StyledPage = styled.div`
   min-height: 100vh;
 `;
 
-const Page = ({ images, children }) => {
+const Page = ({ image, children }) => {
   return (
     <Fragment>
       <Meta />
@@ -28,7 +28,7 @@ const Page = ({ images, children }) => {
       <GlobalStyles />
 
       <StyledPage>
-        <Header images={images} />
+        <Header image={image} />
         <Menu />
         { children }
         <Footer />
@@ -38,11 +38,14 @@ const Page = ({ images, children }) => {
 };
 
 Page.defaultProps = {
-  images: [],
+  image: {},
 };
 
 Page.propTypes = {
-  images: PropTypes.array,
+  image: PropTypes.shape({
+    src: PropTypes.string,
+    alt: PropTypes.string,
+  }),
   children: PropTypes.node.isRequired,
 };
 

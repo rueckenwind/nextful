@@ -5,7 +5,7 @@ import viewportsJs from '../../js/viewports.json';
 import colors from '../../js/colors';
 
 import Logo from './Logo';
-import { Img } from '../Img';
+import { ImgContentful } from '../Img';
 
 const StyledHeader = styled.header`
   position: relative;
@@ -44,29 +44,25 @@ const LogoWrapper = styled.div`
   }
 `;
 
-const StyledImg = styled(Img)`
+const ImgWrap = styled.div`
+  display: flex;
+  align-items: center;
   width: 100%;
   height: calc(100vw / 3);
+  overflow: hidden;
   background-color: ${colors.grayDark};
-  object-fit: cover;
 
   @media ${viewportsJs.xs} {
     height: 100%;
   }
 `;
 
-function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
-
 class Header extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      viewportWidth: 320,
+      viewportWidth: undefined,
     };
-
-    this.image = props.images.length > 0 && props.images[getRandomInt(props.images.length)];
   }
 
   componentDidMount() {
@@ -82,6 +78,8 @@ class Header extends PureComponent {
   }
 
   render() {
+    const { image } = this.props;
+
     return (
       <StyledHeader>
         <LogoLink href="/" title="Zur Startseite">
@@ -89,26 +87,24 @@ class Header extends PureComponent {
             <Logo />
           </LogoWrapper>
         </LogoLink>
-        { this.image && (
-          <StyledImg
-            src={`${this.image.src}?w=${this.state.viewportWidth}&fm=jpg&q=85&fl=progressive`}
-            srcWebp={`${this.image.src}?w=${this.state.viewportWidth}&fm=webp`}
-            alt={this.image.alt} />
+        { image && this.state.viewportWidth && (
+          <ImgWrap>
+            <ImgContentful
+              src={image.src}
+              width={this.state.viewportWidth}
+              alt={image.alt} />
+          </ImgWrap>
         ) }
       </StyledHeader>
     );
   }
 }
 
-Header.defaultProps = {
-  images: [],
-};
-
 Header.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.shape({
+  image: PropTypes.shape({
     src: PropTypes.string,
     alt: PropTypes.string,
-  })),
+  }).isRequired,
 };
 
 export default Header;

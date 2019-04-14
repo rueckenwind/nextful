@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import colors from '../../js/colors';
 
 import { H3 } from '../Typography';
+import { ImgContentful } from '../Img';
 import Link from '../Link';
 import RichText from '../RichText';
 
@@ -26,10 +27,6 @@ const WrapImg = styled.a`
   flex-shrink: 0;
   width: 33.3%;
   margin-left: 1rem;
-`;
-
-const Img = styled.img`
-  width: 100%;
   border: 1px solid #f2f2f2;
 
   ${StyledNews}:hover & {
@@ -41,9 +38,6 @@ const News = ({
   slug, title, image, content, isExerpt,
 }) => {
   const link = `/news/${slug}/`;
-
-  const img = image && `${image.src}?w=200&h=200&fit=fill&fm=jpg&q=85&fl=progressive`;
-  const imgWebp = image && `${image.src}?w=200&h=200&fit=fill&fm=webp`;
 
   const checkedContent = !isExerpt ? content : {
     ...content,
@@ -61,9 +55,11 @@ const News = ({
         {isExerpt && <Link href={link}>weiterlesen »</Link>}
       </Content>
       <WrapImg href={link}>
-        <Img
-          src={img}
-          srcWebp={imgWebp}
+        <ImgContentful
+          width="220"
+          height="220"
+          fit="fill"
+          src={image.src}
           alt={image.alt} />
       </WrapImg>
     </StyledNews>

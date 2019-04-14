@@ -15,9 +15,9 @@ import { HSmall } from '../app/components/Typography';
 import { BikeImage, BikeDetails } from '../app/components/Bike/Bike';
 
 const CfPage = ({
-  images, content, bike, sidebar,
+  image, content, bike, sidebar,
 }) => (
-  <Page images={images}>
+  <Page image={image}>
     <Template>
       <TemplateContent templateHasSidebar={!!sidebar}>
         <BikeImage {...bike.image} />
@@ -35,16 +35,14 @@ const CfPage = ({
 );
 
 CfPage.defaultProps = {
-  images: [
-    {
-      src: 'https://images.ctfassets.net/rdglyrp094mu/6XNtRN11MjJPrKbo1C74sh/ce19af67df4e5942da2be8a2cba8fa7e/fritz-bielmeier-46072-unsplash.jpg', // eslint-disable-line max-len
-      alt: '',
-    },
-  ],
+  image: {
+    src: 'https://images.ctfassets.net/rdglyrp094mu/6XNtRN11MjJPrKbo1C74sh/ce19af67df4e5942da2be8a2cba8fa7e/fritz-bielmeier-46072-unsplash.jpg', // eslint-disable-line max-len
+    alt: '',
+  },
 };
 
 CfPage.propTypes = {
-  images: PropTypes.array,
+  image: PropTypes.object,
   content: PropTypes.object.isRequired,
   sidebar: PropTypes.object.isRequired,
   bike: PropTypes.object.isRequired,

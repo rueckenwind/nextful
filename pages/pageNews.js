@@ -13,10 +13,10 @@ import ContentBox from '../app/components/ContentBox';
 import News from '../app/components/News';
 
 const CfPage = ({
-  images, news, sidebar,
+  image, news, sidebar,
 }) => {
   return (
-    <Page images={images}>
+    <Page image={image}>
       <Template>
         <TemplateContent templateHasSidebar={!!sidebar}>
           <ContentBox>
@@ -33,16 +33,14 @@ const CfPage = ({
 };
 
 CfPage.defaultProps = {
-  images: [
-    {
-      src: 'https://images.ctfassets.net/rdglyrp094mu/6XNtRN11MjJPrKbo1C74sh/ce19af67df4e5942da2be8a2cba8fa7e/fritz-bielmeier-46072-unsplash.jpg', // eslint-disable-line max-len
-      alt: '',
-    },
-  ],
+  image: {
+    src: 'https://images.ctfassets.net/rdglyrp094mu/6XNtRN11MjJPrKbo1C74sh/ce19af67df4e5942da2be8a2cba8fa7e/fritz-bielmeier-46072-unsplash.jpg', // eslint-disable-line max-len
+    alt: '',
+  },
 };
 
 CfPage.propTypes = {
-  images: PropTypes.array,
+  image: PropTypes.object,
   news: PropTypes.array.isRequired,
   sidebar: PropTypes.object.isRequired,
 };

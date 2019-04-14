@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
 import { H3 } from '../Typography';
-import { Img as ImgUnstyled } from '../Img';
+import { ImgContentful } from '../Img';
 import defaultBikeImg from './bike.png';
 import colors from '../../js/colors';
 import times from '../../js/times';
@@ -20,7 +20,7 @@ const TeaserSmall = styled.a`
   text-decoration: none;
 `;
 
-const Img = styled(ImgUnstyled)`
+const ImgWrap = styled.div`
   border: 1px solid ${colors.graylightest};
   transition: border-color ${times.transition};
 
@@ -42,20 +42,18 @@ const SubHeader = styled.div`
 
 const bikeLink = slug => `/fahrrad/${slug}/`;
 
-export const BikeTeaserImg = ({ image, slug }) => {
-  const img = `${image.src}?w=200&h=200&fit=fill&fm=jpg&q=85&fl=progressive`;
-  const imgWebp = `${image.src}?w=200&h=200&fit=fill&fm=webp`;
-
-
-  return (
-    <TeaserSmall href={bikeLink(slug)}>
-      <Img
-        src={img}
-        srcWebp={imgWebp}
+export const BikeTeaserImg = ({ image, slug }) => (
+  <TeaserSmall href={bikeLink(slug)}>
+    <ImgWrap>
+      <ImgContentful
+        width="220"
+        height="220"
+        fit="fill"
+        src={image.src}
         alt={image.alt} />
-    </TeaserSmall>
-  );
-};
+    </ImgWrap>
+  </TeaserSmall>
+);
 
 BikeTeaserImg.defaultProps = {
   image: {
@@ -74,37 +72,35 @@ BikeTeaserImg.propTypes = {
 
 export const BikeTeaser = ({
   name, image, slug, category, frameShapes, status,
-}) => {
-  const img = `${image.src}?w=200&h=200&fit=fill&fm=jpg&q=85&fl=progressive`;
-  const imgWebp = `${image.src}?w=200&h=200&fit=fill&fm=webp`;
+}) => (
+  <Teaser href={bikeLink(slug)}>
+    <ImgContentful
+      width="220"
+      height="220"
+      fit="fill"
+      src={image.src}
+      alt={image.alt} />
+    <Grid>
+      <H3>{ name }</H3>
 
-  return (
-    <Teaser href={bikeLink(slug)}>
-      <Img
-        src={img}
-        srcWebp={imgWebp}
-        alt={image.alt} />
-      <Grid>
-        <H3>{ name }</H3>
+      <div>
+        <SubHeader>Kategorie</SubHeader>
+        { category.name }
+      </div>
 
-        <div>
-          <SubHeader>Kategorie</SubHeader>
-          { category.name }
-        </div>
+      <div>
+        <SubHeader>Rahmenform</SubHeader>
+        { frameShapes.map(frameShape => frameShape.name).join(', ') }
+      </div>
 
-        <div>
-          <SubHeader>Rahmenform</SubHeader>
-          { frameShapes.map(frameShape => frameShape.name).join(', ') }
-        </div>
+      <div>
+        <SubHeader>Status</SubHeader>
+        { status }
+      </div>
+    </Grid>
+  </Teaser>
+);
 
-        <div>
-          <SubHeader>Status</SubHeader>
-          { status }
-        </div>
-      </Grid>
-    </Teaser>
-  );
-};
 BikeTeaser.defaultProps = {
   image: {
     src: defaultBikeImg,
