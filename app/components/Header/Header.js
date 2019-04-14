@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import viewportsJs from '../../js/viewports.json';
@@ -57,48 +57,22 @@ const ImgWrap = styled.div`
   }
 `;
 
-class Header extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      viewportWidth: undefined,
-    };
-  }
+const Header = ({ image }) => (
+  <StyledHeader>
+    <LogoLink href="/" title="Zur Startseite">
+      <LogoWrapper>
+        <Logo />
+      </LogoWrapper>
+    </LogoLink>
 
-  componentDidMount() {
-    const devicePixelRatio = window.devicePixelRatio > 1.5 ? 1.5 : window.devicePixelRatio;
-
-    this.setState((currentState) => { // eslint-disable-line react/no-did-mount-set-state
-      let viewportWidth = Math.floor(window.innerWidth * devicePixelRatio);
-      if (viewportWidth > 4000) viewportWidth = 4000;
-      if (currentState.viewportWidth !== viewportWidth) {
-        return { viewportWidth };
-      }
-    });
-  }
-
-  render() {
-    const { image } = this.props;
-
-    return (
-      <StyledHeader>
-        <LogoLink href="/" title="Zur Startseite">
-          <LogoWrapper>
-            <Logo />
-          </LogoWrapper>
-        </LogoLink>
-        { image && this.state.viewportWidth && (
-          <ImgWrap>
-            <ImgContentful
-              src={image.src}
-              width={this.state.viewportWidth}
-              alt={image.alt} />
-          </ImgWrap>
-        ) }
-      </StyledHeader>
-    );
-  }
-}
+    <ImgWrap>
+      <ImgContentful
+        src={image.src}
+        width={2800}
+        alt={image.alt} />
+    </ImgWrap>
+  </StyledHeader>
+);
 
 Header.propTypes = {
   image: PropTypes.shape({

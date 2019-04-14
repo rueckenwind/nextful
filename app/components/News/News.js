@@ -11,6 +11,7 @@ import RichText from '../RichText';
 
 const StyledNews = styled.article`
   display: flex;
+  align-items: flex-start;
   margin-bottom: 1.5rem;
 `;
 

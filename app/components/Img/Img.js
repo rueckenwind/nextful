@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import styled from '@emotion/styled';
@@ -8,18 +8,18 @@ const Image = styled.img`
 `;
 
 /* eslint-disable jsx-a11y/alt-text */
-export const Img = ({ className, srcWebp, ...props }) => {
+export const Img = React.forwardRef(({ className, srcWebp, ...props }, ref) => {
   if (!srcWebp) {
-    return (<img {...props} />);
+    return (<Image {...props} ref={ref} />);
   }
 
   return (
     <picture className={className}>
       <source type="image/webp" srcSet={srcWebp} />
-      <Image {...props} />
+      <Image {...props} ref={ref} />
     </picture>
   );
-};
+});
 
 Img.defaultProps = {
   className: null,
@@ -31,47 +31,108 @@ Img.propTypes = {
   srcWebp: PropTypes.string,
 };
 
-export const ImgContentful = ({
-  width, height, fit, src, ...props
-}) => {
-  const params = {
-    fit,
-    q: 70,
-  };
+const maxApiDimension = w => (w > 4000 ? 4000 : w);
 
-  const jpgParams = {
-    fm: 'jpg',
-    fl: 'progressive',
-  };
+// eslint-disable-next-line react/no-multi-comp
+export class ImgContentful extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.image = {
+      width: props.width,
+      height: props.height,
+      // eslint-disable-next-line max-len
+      src: '//images.ctfassets.net/rdglyrp094mu/6G0V6JCtBESzu542T0dm4G/d3e18cb056c6c07af325fb6f69e2b80a/placeholder.svg',
+    };
+    this.ratio = props.width / props.height;
+    this.img = React.createRef();
+    this.state = {
+      isPlaceholder: true,
+    };
+  }
 
-  const webpParams = {
-    fm: 'webp',
-  };
+  componentDidMount() {
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const { isIntersecting } = entry;
+        if (isIntersecting) {
+          this.image = {
+            width: this.img.current.offsetWidth,
+            height: this.props.height && this.img.current.offsetWidth * this.ratio,
+            src: this.props.src,
+          };
 
-  const dimensions = {
-    w: width,
-    h: height,
-  };
+          this.observer = this.observer.disconnect();
 
-  const dimensions2x = {
-    w: width && width * 2,
-    h: height && height * 2,
-  };
+          this.setState({
+            isPlaceholder: false,
+          });
+        }
+      });
+    });
+    this.observer.observe(this.img.current);
+  }
 
-  const qsOpt = { skipNulls: true };
+  render() {
+    const {
+      fit,
+      ...props
+    } = this.props;
 
+    const restProps = {
+      ...props,
+    };
 
-  const jpgSrc = `${src}?${qs.stringify({ ...params, ...dimensions, ...jpgParams }, qsOpt)}`;
-  const webpSrc = `${src}?${qs.stringify({ ...params, ...dimensions, ...webpParams }, qsOpt)} 1x, \
-                   ${src}?${qs.stringify({ ...params, ...dimensions2x, ...webpParams }, qsOpt)} 2x`;
+    delete restProps.width;
+    delete restProps.height;
+    delete restProps.src;
 
-  return (
-    <Img
-      src={jpgSrc}
-      srcWebp={webpSrc}
-      {...props} />
-  );
-};
+    const params = {
+      fit,
+      q: 85,
+    };
+
+    const jpgParams = {
+      fm: 'jpg',
+      fl: 'progressive',
+    };
+
+    const webpParams = {
+      fm: 'webp',
+    };
+
+    const dimensions = {
+      w: maxApiDimension(this.image.width),
+      h: maxApiDimension(this.image.height),
+    };
+
+    const dimensions2x = {
+      w: this.image.width && maxApiDimension(this.image.width * 2),
+      h: this.image.height && maxApiDimension(this.image.height * 2),
+    };
+
+    const qsOpt = { skipNulls: true };
+
+    if (this.state.isPlaceholder) {
+      return (
+        <Img
+          ref={this.img}
+          src={`${this.image.src}?${qs.stringify({ ...params, ...dimensions }, qsOpt)}`} />
+      );
+    }
+
+    const jpgSrc = `${this.image.src}?${qs.stringify({ ...params, ...dimensions, ...jpgParams }, qsOpt)}`;
+    const webpSrc = `${this.image.src}?${qs.stringify({ ...params, ...dimensions, ...webpParams }, qsOpt)} 1x, \
+                    ${this.image.src}?${qs.stringify({ ...params, ...dimensions2x, ...webpParams }, qsOpt)} 2x`;
+
+    return (
+      <Img
+        ref={this.img}
+        src={jpgSrc}
+        srcWebp={webpSrc}
+        {...restProps} />
+    );
+  }
+}
 
 ImgContentful.defaultProps = {
   width: null,
