@@ -22,7 +22,7 @@ export class ImgContentful extends PureComponent {
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
+    console.log('componentDidMount', this.img);
     this.observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         const { isIntersecting } = entry;
@@ -34,12 +34,12 @@ export class ImgContentful extends PureComponent {
     });
     this.observer.observe(this.img.current);
 
-    if (window.requestIdleCallback) {
-      window.requestIdleCallback(() => {
-        console.log('requestIdleCallback');
-        this.loadImg();
-      });
-    }
+    // if (window.requestIdleCallback) {
+    //   window.requestIdleCallback(() => {
+    //     console.log('requestIdleCallback');
+    //     this.loadImg();
+    //   });
+    // }
   }
 
   loadImg = () => {
