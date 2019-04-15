@@ -10,12 +10,10 @@ const maxApiDimension = w => (w > 4000 ? 4000 : w);
 export class ImgContentful extends PureComponent {
   constructor(props) {
     super(props);
-    this.image = {
-      width: props.width,
-      height: props.height,
-      // eslint-disable-next-line max-len
-      src: '//images.ctfassets.net/rdglyrp094mu/6G0V6JCtBESzu542T0dm4G/d3e18cb056c6c07af325fb6f69e2b80a/placeholder.svg',
-    };
+    this.width = props.width;
+    this.height = props.height;
+    // eslint-disable-next-line max-len
+    this.src = '//images.ctfassets.net/rdglyrp094mu/6G0V6JCtBESzu542T0dm4G/d3e18cb056c6c07af325fb6f69e2b80a/placeholder.svg';
     this.ratio = props.width / props.height;
     this.img = React.createRef();
     this.state = {
@@ -45,11 +43,9 @@ export class ImgContentful extends PureComponent {
   }
 
   loadImg = () => {
-    this.image = {
-      width: this.img.current.offsetWidth,
-      height: this.props.height && this.img.current.offsetWidth * this.ratio,
-      src: this.props.src,
-    };
+    this.width = this.img.current.offsetWidth;
+    this.height = this.props.height && this.img.current.offsetWidth * this.ratio;
+    this.src = this.props.src;
 
     this.observer = this.observer && this.observer.disconnect();
 
@@ -87,36 +83,36 @@ export class ImgContentful extends PureComponent {
     };
 
     const dimensions = {
-      w: maxApiDimension(this.image.width),
-      h: maxApiDimension(this.image.height),
+      w: maxApiDimension(this.width),
+      h: maxApiDimension(this.height),
     };
 
     const dimensions2x = {
-      w: this.image.width && maxApiDimension(this.image.width * 2),
-      h: this.image.height && maxApiDimension(this.image.height * 2),
+      w: this.width && maxApiDimension(this.width * 2),
+      h: this.height && maxApiDimension(this.height * 2),
     };
 
     const qsOpt = { skipNulls: true };
 
-    if (this.state.isPlaceholder) {
-      return (
-        <Img
-          width={props.width}
-          height={props.height}
-          ref={this.img}
-          src={`${this.image.src}?${qs.stringify({ ...params, ...dimensions }, qsOpt)}`} />
-      );
-    }
+    const placeholderSrc = `${this.src}?${qs.stringify({
+      q: 1,
+      fit: 'pad',
+      ...jpgParams,
+      ...dimensions,
+    }, qsOpt)}`;
+    const jpgSrc = `${this.src}?${qs.stringify({ ...params, ...dimensions, ...jpgParams }, qsOpt)}`;
+    const webpSrc = `${this.src}?${qs.stringify({ ...params, ...dimensions, ...webpParams }, qsOpt)} 1x, \
+                    ${this.src}?${qs.stringify({ ...params, ...dimensions2x, ...webpParams }, qsOpt)} 2x`;
 
-    const jpgSrc = `${this.image.src}?${qs.stringify({ ...params, ...dimensions, ...jpgParams }, qsOpt)}`;
-    const webpSrc = `${this.image.src}?${qs.stringify({ ...params, ...dimensions, ...webpParams }, qsOpt)} 1x, \
-                    ${this.image.src}?${qs.stringify({ ...params, ...dimensions2x, ...webpParams }, qsOpt)} 2x`;
+    const src = this.state.isPlaceholder ? placeholderSrc : jpgSrc;
 
     return (
       <Img
         ref={this.img}
-        src={jpgSrc}
-        srcWebp={webpSrc}
+        width={this.width}
+        height={this.height}
+        src={src}
+        srcWebp={this.state.isPlaceholder ? null : webpSrc}
         {...restProps} />
     );
   }
