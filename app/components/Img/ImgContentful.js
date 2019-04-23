@@ -2,9 +2,17 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 
+import styled from '@emotion/styled';
 import { Img } from './Img';
 
 const maxApiDimension = w => (w > 4000 ? 4000 : w);
+
+const ImgWrap = styled.div`
+  ${({ loaded }) => (loaded ? '' : `
+    filter: blur(.5rem);
+    clip-path: inset(0 0);
+  `)}
+`;
 
 // eslint-disable-next-line react/no-multi-comp
 export class ImgContentful extends PureComponent {
@@ -13,11 +21,18 @@ export class ImgContentful extends PureComponent {
     this.width = props.width;
     this.height = props.height;
     // eslint-disable-next-line max-len
-    this.src = '//images.ctfassets.net/rdglyrp094mu/6G0V6JCtBESzu542T0dm4G/d3e18cb056c6c07af325fb6f69e2b80a/placeholder.svg';
+    // this.src = '//images.ctfassets.net/rdglyrp094mu/6G0V6JCtBESzu542T0dm4G/d3e18cb056c6c07af325fb6f69e2b80a/placeholder.svg';
     this.ratio = props.width / props.height;
+    this.src = `${props.src}?${qs.stringify({
+      w: props.width * 0.2,
+      h: props.height && props.height * 0.2,
+      fm: 'jpg',
+      q: 5,
+      fit: props.fit,
+    })}`;
     this.img = React.createRef();
     this.state = {
-      isPlaceholder: true,
+      loaded: false,
     };
   }
 
@@ -50,7 +65,7 @@ export class ImgContentful extends PureComponent {
     this.observer = this.observer && this.observer.disconnect();
 
     this.setState({
-      isPlaceholder: false,
+      loaded: true,
     });
   }
 
@@ -94,26 +109,28 @@ export class ImgContentful extends PureComponent {
 
     const qsOpt = { skipNulls: true };
 
-    const placeholderSrc = `${this.src}?${qs.stringify({
-      q: 1,
-      fit: 'pad',
-      ...jpgParams,
-      ...dimensions,
-    }, qsOpt)}`;
+    // const placeholderSrc = `${this.src}?${qs.stringify({
+    //   q: 1,
+    //   fit: 'pad',
+    //   ...jpgParams,
+    //   ...dimensions,
+    // }, qsOpt)}`;
     const jpgSrc = `${this.src}?${qs.stringify({ ...params, ...dimensions, ...jpgParams }, qsOpt)}`;
     const webpSrc = `${this.src}?${qs.stringify({ ...params, ...dimensions, ...webpParams }, qsOpt)} 1x, \
                     ${this.src}?${qs.stringify({ ...params, ...dimensions2x, ...webpParams }, qsOpt)} 2x`;
 
-    const src = this.state.isPlaceholder ? placeholderSrc : jpgSrc;
+    const src = this.state.loaded ? jpgSrc : this.src;
 
     return (
-      <Img
-        ref={this.img}
-        width={this.width}
-        height={this.height}
-        src={src}
-        srcWebp={this.state.isPlaceholder ? null : webpSrc}
-        {...restProps} />
+      <ImgWrap loaded={this.state.loaded}>
+        <Img
+          ref={this.img}
+          width={this.width}
+          height={this.height}
+          src={src}
+          srcWebp={this.state.loaded ? webpSrc : null}
+          {...restProps} />
+      </ImgWrap>
     );
   }
 }

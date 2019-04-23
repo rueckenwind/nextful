@@ -9,12 +9,17 @@ import colors from '../../js/colors';
 import times from '../../js/times';
 
 const Teaser = styled.a`
-  display: grid;
-  grid-template-columns: 33% auto;
-  grid-column-gap: 1rem;
+  display: flex;
   color: inherit;
   text-decoration: none;
 `;
+
+const TeaserImg = styled.div`
+  flex-shrink: 0;
+  width: calc(100% / 3);
+  margin-right: 1rem;
+`;
+
 const TeaserSmall = styled.a`
   color: inherit;
   text-decoration: none;
@@ -74,14 +79,16 @@ export const BikeTeaser = ({
   name, image, slug, category, frameShapes, status,
 }) => (
   <Teaser href={bikeLink(slug)}>
-    <ImgWrap>
-      <ImgContentful
-        width={220}
-        height={220}
-        fit="fill"
-        src={image.src}
-        alt={image.alt} />
-    </ImgWrap>
+    <TeaserImg>
+      <ImgWrap>
+        <ImgContentful
+          width={220}
+          height={220}
+          fit="fill"
+          src={image.src}
+          alt={image.alt} />
+      </ImgWrap>
+    </TeaserImg>
     <Grid>
       <H3>{ name }</H3>
 
