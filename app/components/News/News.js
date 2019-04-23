@@ -28,7 +28,7 @@ const WrapImg = styled.a`
   flex-shrink: 0;
   width: 33.3%;
   margin-left: 1rem;
-  border: 1px solid #f2f2f2;
+  border: 1px solid ${colors.graylight};
 
   ${StyledNews}:hover & {
     border-color: ${colors.blue};

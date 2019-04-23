@@ -11,6 +11,8 @@ import Link from '../Link';
 import MapStatic from '../MapStatic';
 import { OpeningHours } from '../OpeningHours';
 import ContactForm from '../ContactForm';
+import { BikeTeaser } from '../BikeTeaser';
+import getBikeProps from '../../../scripts/remodel/getBikeProps';
 
 const OpenStatus = dynamic(() => import('../OpeningHours').then(mod => mod.OpenStatus), {
   ssr: false,
@@ -30,20 +32,26 @@ const options = {
     },
     [BLOCKS.HR]: () => <HR />,
     [BLOCKS.EMBEDDED_ENTRY]: (node) => {
-      const { id } = node.data.target.fields;
+      const { target } = node.data;
+      const { id } = target.sys.contentType.sys;
+
+      const sidebarWidgets = {
+        openingStatus: <OpenStatus />,
+        openingHours: <OpeningHours />,
+        staticMap: <MapStatic />,
+        contactForm: <ContactForm />,
+      };
 
       switch (id) {
-        case 'openingStatus':
-          return <OpenStatus />;
+        case 'sidebarWidget':
+          const { id: widgetId } = target.fields;
+          console.log(sidebarWidgets);
+          console.log(widgetId);
+          return sidebarWidgets[widgetId];
 
-        case 'openingHours':
-          return <OpeningHours />;
-
-        case 'staticMap':
-          return <MapStatic />;
-
-        case 'contactForm':
-          return <ContactForm />;
+        case 'bike':
+          const bike = getBikeProps(target);
+          return <BikeTeaser {...bike} key={bike.id} />;
 
         default:
           return null;

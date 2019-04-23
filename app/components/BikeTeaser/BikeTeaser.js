@@ -21,7 +21,7 @@ const TeaserSmall = styled.a`
 `;
 
 const ImgWrap = styled.div`
-  border: 1px solid ${colors.graylightest};
+  border: 1px solid ${colors.graylight};
   transition: border-color ${times.transition};
 
   ${Teaser}:hover &,
@@ -74,12 +74,14 @@ export const BikeTeaser = ({
   name, image, slug, category, frameShapes, status,
 }) => (
   <Teaser href={bikeLink(slug)}>
-    <ImgContentful
-      width={220}
-      height={220}
-      fit="fill"
-      src={image.src}
-      alt={image.alt} />
+    <ImgWrap>
+      <ImgContentful
+        width={220}
+        height={220}
+        fit="fill"
+        src={image.src}
+        alt={image.alt} />
+    </ImgWrap>
     <Grid>
       <H3>{ name }</H3>
 
