@@ -1,7 +1,2 @@
-import OpenStatus from './OpenStatus';
-import OpeningHours from './OpeningHours';
-
-export {
-  OpenStatus,
-  OpeningHours,
-};
+export { default as OpenStatus } from './OpenStatus';
+export { default as OpeningHours } from './OpeningHours';

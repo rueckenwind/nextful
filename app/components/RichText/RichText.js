@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import dynamic from 'next/dynamic';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 
@@ -8,8 +9,12 @@ import {
 } from '../Typography';
 import Link from '../Link';
 import MapStatic from '../MapStatic';
-import { OpeningHours, OpenStatus } from '../OpeningHours';
+import { OpeningHours } from '../OpeningHours';
 import ContactForm from '../ContactForm';
+
+const OpenStatus = dynamic(() => import('../OpeningHours').then(mod => mod.OpenStatus), {
+  ssr: false,
+});
 
 const options = {
   renderNode: {
