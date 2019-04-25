@@ -9,7 +9,7 @@ const maxApiDimension = w => (w > 4000 ? 4000 : w);
 
 const ImgWrap = styled.div`
   ${({ loaded }) => (loaded ? '' : `
-    filter: blur(.5rem);
+    filter: blur(.25rem);
     clip-path: inset(0 0);
   `)}
 `;
@@ -20,19 +20,10 @@ export class ImgContentful extends PureComponent {
     super(props);
     this.width = props.width;
     this.height = props.height;
-    // eslint-disable-next-line max-len
-    // this.src = '//images.ctfassets.net/rdglyrp094mu/6G0V6JCtBESzu542T0dm4G/d3e18cb056c6c07af325fb6f69e2b80a/placeholder.svg';
     this.ratio = props.width / props.height;
-    this.src = `${props.src}?${qs.stringify({
-      w: props.width * 0.2,
-      h: props.height && props.height * 0.2,
-      fm: 'jpg',
-      q: 5,
-      fit: props.fit,
-    })}`;
     this.img = React.createRef();
     this.state = {
-      loaded: false,
+      status: 'loading',
     };
   }
 
@@ -60,18 +51,27 @@ export class ImgContentful extends PureComponent {
   loadImg = () => {
     this.width = this.img.current.offsetWidth;
     this.height = this.props.height && this.img.current.offsetWidth * this.ratio;
-    this.src = this.props.src;
 
     this.observer = this.observer && this.observer.disconnect();
 
     this.setState({
-      loaded: true,
+      status: 'loadingHiRes',
+    });
+  }
+
+  handleHasLoaded = () => {
+    console.log('handleHasLoaded');
+    this.setState({
+      status: 'hasLoaded',
     });
   }
 
   render() {
     const {
+      width,
+      height,
       fit,
+      src,
       ...props
     } = this.props;
 
@@ -109,27 +109,30 @@ export class ImgContentful extends PureComponent {
 
     const qsOpt = { skipNulls: true };
 
-    // const placeholderSrc = `${this.src}?${qs.stringify({
-    //   q: 1,
-    //   fit: 'pad',
-    //   ...jpgParams,
-    //   ...dimensions,
-    // }, qsOpt)}`;
-    const jpgSrc = `${this.src}?${qs.stringify({ ...params, ...dimensions, ...jpgParams }, qsOpt)}`;
-    const webpSrc = `${this.src}?${qs.stringify({ ...params, ...dimensions, ...webpParams }, qsOpt)} 1x, \
-                    ${this.src}?${qs.stringify({ ...params, ...dimensions2x, ...webpParams }, qsOpt)} 2x`;
+    const placeholderSrc = `${src}?${qs.stringify({
+      w: width * 0.2,
+      h: height && height * 0.2,
+      fm: 'jpg',
+      q: 10,
+      fit,
+    }, qsOpt)}`;
+    const jpgSrc = `${src}?${qs.stringify({ ...params, ...dimensions, ...jpgParams }, qsOpt)}`;
+    const webpSrc = `${src}?${qs.stringify({ ...params, ...dimensions, ...webpParams }, qsOpt)} 1x, \
+                    ${src}?${qs.stringify({ ...params, ...dimensions2x, ...webpParams }, qsOpt)} 2x`;
 
-    const src = this.state.loaded ? jpgSrc : this.src;
+    const hasLoaded = this.state.status === 'hasLoaded';
+    const loadHiRes = this.state.status === 'loadingHiRes' || hasLoaded;
 
     return (
-      <ImgWrap loaded={this.state.loaded}>
+      <ImgWrap loaded={hasLoaded}>
         <Img
           ref={this.img}
           width={this.width}
           height={this.height}
-          src={src}
-          srcWebp={this.state.loaded ? webpSrc : null}
-          {...restProps} />
+          src={loadHiRes ? jpgSrc : placeholderSrc}
+          srcWebp={loadHiRes ? webpSrc : null}
+          {...restProps}
+          onLoad={this.handleHasLoaded} />
       </ImgWrap>
     );
   }
