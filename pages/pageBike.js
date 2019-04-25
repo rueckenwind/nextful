@@ -2,6 +2,7 @@
 
 import { jsx } from '@emotion/core';
 import PropTypes from 'prop-types';
+import dynamic from 'next/dynamic';
 
 import Page from '../app/components/Page';
 import {
@@ -12,15 +13,19 @@ import {
 import ContentBox from '../app/components/ContentBox';
 import RichText from '../app/components/RichText';
 import { HSmall } from '../app/components/Typography';
-import { BikeImage, BikeDetails } from '../app/components/Bike/Bike';
+import { BikeDetails } from '../app/components/Bike/Bike';
+
+const BikeImage = dynamic(() => import('../app/components/Bike/Bike').then(mod => mod.BikeImage), {
+  ssr: false,
+});
 
 const CfPage = ({
-  headerImage, content, bike, sidebar,
+  headerImage, content, sidebar, image, ...bike
 }) => (
   <Page image={headerImage}>
     <Template>
       <TemplateContent templateHasSidebar={!!sidebar}>
-        <BikeImage {...bike.image} />
+        <BikeImage {...image} />
         <ContentBox>
           <RichText content={content} />
           <br />
@@ -43,9 +48,9 @@ CfPage.defaultProps = {
 
 CfPage.propTypes = {
   headerImage: PropTypes.object,
+  image: PropTypes.object.isRequired,
   content: PropTypes.object.isRequired,
   sidebar: PropTypes.object.isRequired,
-  bike: PropTypes.object.isRequired,
 };
 
 CfPage.getInitialProps = async ({ query }) => query;

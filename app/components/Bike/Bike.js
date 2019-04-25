@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import qs from 'qs';
 import ReactImageMagnify from 'react-image-magnify';
 
 import colors from '../../js/colors';
+import checkForWebpSupport from '../../js/checkForWebpSupport';
 
 const MAX_WIDTH = 680;
 
@@ -48,6 +50,10 @@ export const BikeImage = ({ src, alt, details }) => {
     height: imgIsBig ? 2400 / ratio : details.height,
   };
 
+  const contentfulImg = checkForWebpSupport()
+    ? `${src}?${qs.stringify({ fm: 'webp' })}`
+    : `${src}?${qs.stringify({ fm: 'jpg', q: 70 })}`;
+
   console.log(details);
 
   return (
@@ -65,7 +71,7 @@ export const BikeImage = ({ src, alt, details }) => {
             style: {
               maxWidth: 'none',
             },
-            src,
+            src: contentfulImg,
             width: newDetails.width,
             height: newDetails.height,
           },
@@ -122,12 +128,14 @@ export const BikeDetails = ({ category, frameShapes = [], status }) => {
 
   return (
     <Table>
-      { details.map(({ title, value }) => (
-        <Tr>
-          <Td>{ title }</Td>
-          <Td>{ value }</Td>
-        </Tr>
-      ))}
+      <tbody>
+        { details.map(({ title, value }) => (
+          <Tr key={title}>
+            <Td>{ title }</Td>
+            <Td>{ value }</Td>
+          </Tr>
+        ))}
+      </tbody>
     </Table>
   );
 };
@@ -137,6 +145,6 @@ BikeDetails.propTypes = {
     name: PropTypes.string,
     id: PropTypes.string,
   }).isRequired,
-  frameShapes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  frameShapes: PropTypes.arrayOf(PropTypes.object).isRequired,
   status: PropTypes.string.isRequired,
 };

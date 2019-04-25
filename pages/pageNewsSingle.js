@@ -20,7 +20,10 @@ const CfPage = ({
     <Template>
       <TemplateContent templateHasSidebar={!!sidebar}>
         <ContentBox>
-          <ImgContentful src={image.src} alt={image.alt} />
+          <ImgContentful
+            width={640}
+            src={image.src}
+            alt={image.alt} />
         </ContentBox>
 
         <ContentBox>
