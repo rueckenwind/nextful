@@ -10,27 +10,28 @@ import {
   TemplateSidebar,
 } from '../app/components/Template';
 import ContentBox from '../app/components/ContentBox';
-import News from '../app/components/News';
+import RichText from '../app/components/RichText';
+import { ImgContentful } from '../app/components/Img';
 
 const CfPage = ({
-  headerImage, news, sidebar,
-}) => {
-  return (
-    <Page image={headerImage}>
-      <Template>
-        <TemplateContent templateHasSidebar={!!sidebar}>
-          <ContentBox>
-            { news.map(singleNews => (
-              <News {...singleNews} key={singleNews.slug} isExerpt={true} />
-            )) }
-          </ContentBox>
-        </TemplateContent>
+  headerImage, image, content, sidebar,
+}) => (
+  <Page image={headerImage}>
+    <Template>
+      <TemplateContent templateHasSidebar={!!sidebar}>
+        <ContentBox>
+          <ImgContentful src={image.src} alt={image.alt} />
+        </ContentBox>
 
-        <TemplateSidebar widgets={sidebar.widgets} />
-      </Template>
-    </Page>
-  );
-};
+        <ContentBox>
+          <RichText content={content} />
+        </ContentBox>
+      </TemplateContent>
+
+      <TemplateSidebar widgets={sidebar.widgets} />
+    </Template>
+  </Page>
+);
 
 CfPage.defaultProps = {
   headerImage: {
@@ -41,7 +42,8 @@ CfPage.defaultProps = {
 
 CfPage.propTypes = {
   headerImage: PropTypes.object,
-  news: PropTypes.array.isRequired,
+  image: PropTypes.object.isRequired,
+  content: PropTypes.object.isRequired,
   sidebar: PropTypes.object.isRequired,
 };
 

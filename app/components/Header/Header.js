@@ -57,7 +57,7 @@ const ImgWrap = styled.div`
   }
 `;
 
-const Header = ({ image }) => (
+const Header = ({ image: { src, alt } }) => (
   <StyledHeader>
     <LogoLink href="/" title="Zur Startseite">
       <LogoWrapper>
@@ -67,9 +67,9 @@ const Header = ({ image }) => (
 
     <ImgWrap>
       <ImgContentful
-        src={image.src}
+        src={src}
         width={2800}
-        alt={image.alt} />
+        alt={alt} />
     </ImgWrap>
   </StyledHeader>
 );

@@ -7,13 +7,8 @@ module.exports = ({ sys, fields } = {}, isTeaser = false) => {
     content,
     category,
     frameShapes,
-    colors,
     status,
   } = fields;
-
-  console.log({
-    colors,
-  });
 
   if (!slug) {
     throw new Error('Slug not defined!');

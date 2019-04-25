@@ -17,13 +17,13 @@ import RichText from '../app/components/RichText';
 import { HSmall } from '../app/components/Typography';
 
 const CfPage = ({
-  image,
+  headerImage,
   content,
   currentNews,
   latestBikes,
   sidebar,
 }) => (
-  <Page image={image}>
+  <Page image={headerImage}>
     <Template>
       <TemplateContent templateHasSidebar={!!sidebar}>
         <ContentBox>
@@ -52,7 +52,7 @@ const CfPage = ({
 );
 
 CfPage.defaultProps = {
-  image: {
+  headerImage: {
     src: 'https://images.ctfassets.net/rdglyrp094mu/6XNtRN11MjJPrKbo1C74sh/ce19af67df4e5942da2be8a2cba8fa7e/fritz-bielmeier-46072-unsplash.jpg', // eslint-disable-line max-len
     alt: '',
   },
@@ -61,7 +61,7 @@ CfPage.defaultProps = {
 };
 
 CfPage.propTypes = {
-  image: PropTypes.object,
+  headerImage: PropTypes.object,
   currentNews: PropTypes.object,
   latestBikes: PropTypes.array,
   content: PropTypes.object.isRequired,

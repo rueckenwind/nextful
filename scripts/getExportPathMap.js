@@ -1,9 +1,14 @@
 const { createClient } = require('contentful');
-const getBikes = require('./remodel/getBikes');
-const getBikeCategories = require('./remodel/getBikeCategories');
-const getBikeFrameShapes = require('./remodel/getBikeFrameShapes');
-const getNews = require('./remodel/getNews');
-const getPages = require('./remodel/getPages');
+
+const getSidebarProps = require('./remodel/getSidebarProps');
+const getBikeProps = require('./remodel/getBikeProps');
+const getNewsProps = require('./remodel/getNewsProps');
+const getPageProps = require('./remodel/getPageProps');
+
+const getNewsPages = require('./remodel/getNewsPages');
+const getBikePages = require('./remodel/getBikePages');
+const getMainPages = require('./remodel/getMainPages');
+
 
 const { getEntries } = createClient({
   space: process.env.CONTENTFUL_SPACE_ID,
@@ -12,16 +17,18 @@ const { getEntries } = createClient({
 
 
 async function exportPathMap() {
-  const staticPages = {
-    // '/404': {
-    //   page: '/_error',
+  const staticPages = [
+    // {
+    //   url: '/404/',
+    //   template: '/_error',
     //   query: { statusCode: 404 },
     // },
-    // '/500': {
-    //   page: '/_error',
+    // {
+    //   url: '/500/',
+    //   template: '/_error',
     //   query: { statusCode: 500 },
     // },
-  };
+  ];
 
   const { items: [defaultSidebar] } = await getEntries({
     content_type: 'sidebar',
@@ -75,41 +82,53 @@ async function exportPathMap() {
     throw new Error(e);
   });
 
-  const {
-    newsCleaned,
-    newsPages,
-  } = getNews(resNews, defaultSidebar);
+  const newsCleaned = resNews.items.map(item => getNewsProps(item));
 
-  const {
-    bikesCleanedForList,
-    bikesPages,
-  } = getBikes(resBikes, defaultSidebar);
+  const bikesCleaned = resBikes.items.map(item => getBikeProps(item));
+  const bikesCleanedForList = resBikes.items.map(item => getBikeProps(item, true));
 
-  const {
-    bikeCategoriesCleaned,
-  } = getBikeCategories(resBikeCategories);
+  const bikeCategoriesCleaned = resBikeCategories.items.map(item => item.fields);
+  const bikeFrameShapesCleaned = resBikeFrameShapes.items.map(item => item.fields);
 
-  const {
-    bikeFrameShapesCleaned,
-  } = getBikeFrameShapes(resBikeFrameShapes);
+  const pagesCleaned = resPages.items.map(page => getPageProps(page));
 
-  const {
-    pages,
-  } = getPages(
-    resPages,
-    defaultSidebar,
+
+  /**
+   * Pages
+   */
+  const bikesPages = getBikePages(bikesCleaned);
+
+  const mainPages = getMainPages(
+    pagesCleaned,
     newsCleaned,
     bikesCleanedForList,
     bikeCategoriesCleaned,
     bikeFrameShapesCleaned,
   );
 
-  return {
+  const newsPages = getNewsPages(newsCleaned, pagesCleaned);
+
+  const pages = [
+    ...mainPages,
     ...staticPages,
-    ...pages,
     ...newsPages,
     ...bikesPages,
-  };
+  ];
+
+  const pagesWithSidebar = pages.map((page) => {
+    if (page.query.sidebar) return page;
+
+    page.query.sidebar = getSidebarProps(defaultSidebar);
+    return page;
+  });
+
+  return pagesWithSidebar.reduce((state, current) => {
+    state[current.url] = {
+      page: current.template,
+      query: current.query,
+    };
+    return state;
+  }, {});
 }
 
 module.exports = exportPathMap;

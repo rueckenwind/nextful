@@ -19,7 +19,7 @@ module.exports = ({ sys, fields } = {}, defaultSidebar) => {
   };
 
   if (image) {
-    pageProps.image = {
+    pageProps.headerImage = {
       src: image.fields.file.url,
       alt: image.fields.description || image.fields.title,
     };

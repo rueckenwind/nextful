@@ -45,8 +45,6 @@ const options = {
       switch (id) {
         case 'sidebarWidget':
           const { id: widgetId } = target.fields;
-          console.log(sidebarWidgets);
-          console.log(widgetId);
           return sidebarWidgets[widgetId];
 
         case 'bike':
