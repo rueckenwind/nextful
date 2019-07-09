@@ -7,19 +7,27 @@ const Image = styled.img`
 `;
 
 /* eslint-disable jsx-a11y/alt-text */
-export const Img = React.forwardRef(({ className, srcWebp, ...props }, ref) => (
+export const Img = React.forwardRef(({
+  className,
+  srcSetJpg,
+  srcSetWebp,
+  ...props
+}, ref) => (
   <picture className={className}>
-    { srcWebp && <source type="image/webp" srcSet={srcWebp} />}
+    { srcSetJpg && <source type="image/jpg" srcSet={srcSetJpg} />}
+    { srcSetWebp && <source type="image/webp" srcSet={srcSetWebp} />}
     <Image {...props} ref={ref} />
   </picture>
 ));
 
 Img.defaultProps = {
   className: null,
-  srcWebp: null,
+  srcSetJpg: null,
+  srcSetWebp: null,
 };
 
 Img.propTypes = {
   className: PropTypes.string,
-  srcWebp: PropTypes.string,
+  srcSetJpg: PropTypes.string,
+  srcSetWebp: PropTypes.string,
 };

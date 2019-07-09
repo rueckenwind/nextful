@@ -28,12 +28,12 @@ export class ImgContentful extends PureComponent {
   }
 
   componentDidMount() {
-    console.log('componentDidMount', this.img);
+    // console.log('componentDidMount', this.img);
     this.observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         const { isIntersecting } = entry;
         if (isIntersecting) {
-          console.log('isIntersecting');
+          // console.log('isIntersecting');
           this.loadImg();
         }
       });
@@ -60,7 +60,7 @@ export class ImgContentful extends PureComponent {
   }
 
   handleHasLoaded = () => {
-    console.log('handleHasLoaded');
+    // console.log('handleHasLoaded');
     this.setState({
       status: 'hasLoaded',
     });
@@ -88,23 +88,9 @@ export class ImgContentful extends PureComponent {
       q: 85,
     };
 
-    const jpgParams = {
-      fm: 'jpg',
-      fl: 'progressive',
-    };
-
-    const webpParams = {
-      fm: 'webp',
-    };
-
     const dimensions = {
       w: maxApiDimension(this.width),
       h: maxApiDimension(this.height),
-    };
-
-    const dimensions2x = {
-      w: this.width && maxApiDimension(this.width * 2),
-      h: this.height && maxApiDimension(this.height * 2),
     };
 
     const qsOpt = { skipNulls: true };
@@ -116,9 +102,37 @@ export class ImgContentful extends PureComponent {
       q: 10,
       fit,
     }, qsOpt)}`;
-    const jpgSrc = `${src}?${qs.stringify({ ...params, ...dimensions, ...jpgParams }, qsOpt)}`;
-    const webpSrc = `${src}?${qs.stringify({ ...params, ...dimensions, ...webpParams }, qsOpt)} 1x, \
-                    ${src}?${qs.stringify({ ...params, ...dimensions2x, ...webpParams }, qsOpt)} 2x`;
+    const jpgSrc = `${src}?${qs.stringify({ ...params, ...dimensions, fm: 'jpg' }, qsOpt)}`;
+
+    const viewports = [
+      310,
+      990,
+      1425,
+      1780,
+      2096,
+      3000,
+    ].filter(vp => vp <= width * 2);
+
+    // console.log({ width, viewports });
+
+    const srcSetJpg = viewports.map((vp) => {
+      const jpgDimensions = {
+        w: maxApiDimension(vp),
+        h: maxApiDimension(vp * this.ratio),
+      };
+      const srcParams = { ...params, ...jpgDimensions, fm: 'jpg' };
+      return `${src}?${qs.stringify(srcParams, qsOpt)} ${vp}w`;
+    }).join(', ');
+
+    const srcSetWebp = viewports.map((vp) => {
+      const webpDimensions = {
+        w: maxApiDimension(vp),
+        h: maxApiDimension(vp * this.ratio),
+      };
+      const srcParams = { ...params, ...webpDimensions, fm: 'webp' };
+      return `${src}?${qs.stringify(srcParams, qsOpt)} ${vp}w`;
+    }).join(', ');
+
 
     const hasLoaded = this.state.status === 'hasLoaded';
     const loadHiRes = this.state.status === 'loadingHiRes' || hasLoaded;
@@ -130,7 +144,9 @@ export class ImgContentful extends PureComponent {
           width={this.width}
           height={this.height}
           src={loadHiRes ? jpgSrc : placeholderSrc}
-          srcWebp={loadHiRes ? webpSrc : null}
+          srcSetJpg={srcSetJpg}
+          srcSetWebp={srcSetWebp}
+          // srcWebp={loadHiRes ? webpSrc : null}
           {...restProps}
           onLoad={this.handleHasLoaded} />
       </ImgWrap>

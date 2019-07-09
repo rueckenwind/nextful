@@ -1,13 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import Head from 'next/head';
 import styled from '@emotion/styled';
 
-import GlobalStyles from '../GlobalStyles';
 import Header from '../Header';
 import Menu from '../Menu';
 import Footer from '../Footer';
-import Meta from '../Meta/Meta';
 
 const StyledPage = styled.div`
   display: flex;
@@ -15,25 +12,20 @@ const StyledPage = styled.div`
   min-height: 100vh;
 `;
 
+const Content = styled.main`
+  flex-grow: 1;
+`;
+
 const Page = ({ image, children }) => {
   return (
-    <Fragment>
-      <Meta />
-      <Head>
-        <link rel="prefetch" href="https://fonts.gstatic.com/s/opensans/v16/mem5YaGs126MiZpBA-UN_r8OUuhpKKSTjw.woff2" />
-        <link rel="prefetch" href="https://fonts.gstatic.com/s/opensans/v16/mem8YaGs126MiZpBA-UFVZ0bf8pkAg.woff2" />
-        <link rel="prefetch" href="https://fonts.gstatic.com/s/opensans/v16/mem5YaGs126MiZpBA-UNirkOUuhpKKSTjw.woff2" />
-      </Head>
-
-      <GlobalStyles />
-
-      <StyledPage>
-        <Header image={image} />
-        <Menu />
+    <StyledPage>
+      <Header image={image} />
+      <Menu />
+      <Content>
         { children }
-        <Footer />
-      </StyledPage>
-    </Fragment>
+      </Content>
+      <Footer />
+    </StyledPage>
   );
 };
 
