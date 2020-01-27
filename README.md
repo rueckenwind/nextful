@@ -1,6 +1,6 @@
 # Rueckenwind Website v8 aka. cyclon
 
-[![CircleCI](https://circleci.com/gh/rueckenwind/cyclon/tree/master.svg?style=svg)](https://circleci.com/gh/rueckenwind/cyclon/tree/master)
+![cylon](https://github.com/rueckenwind/cyclon/workflows/cylon/badge.svg)
 
 ## Setup
 
