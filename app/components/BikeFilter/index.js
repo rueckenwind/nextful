@@ -1,1 +1,1 @@
-export { default } from './BikeFilter';
+export { default } from './BikeFilter'

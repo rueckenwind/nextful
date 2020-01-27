@@ -1,1 +1,1 @@
-export { default } from './MapStatic';
+export { MapStatic } from './MapStatic'

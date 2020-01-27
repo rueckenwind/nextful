@@ -1,17 +1,9 @@
 module.exports = ({ sys, fields } = {}, isTeaser = false) => {
-  const { id } = sys;
-  const {
-    name,
-    slug,
-    image,
-    content,
-    category,
-    frameShapes,
-    status,
-  } = fields;
+  const { id } = sys
+  const { name, slug, image, content, category, frameShapes, status } = fields
 
   if (!slug) {
-    throw new Error('Slug not defined!');
+    throw new Error('Slug not defined!')
   }
 
   const bikeProps = {
@@ -21,18 +13,18 @@ module.exports = ({ sys, fields } = {}, isTeaser = false) => {
     category: category.fields,
     frameShapes: frameShapes.map(item => item.fields),
     status,
-  };
+  }
 
   if (image) {
     bikeProps.image = {
       src: image.fields.file.url,
       alt: image.fields.description || image.fields.title,
       details: image.fields.file.details.image,
-    };
+    }
   }
 
   if (isTeaser) {
-    return bikeProps;
+    return bikeProps
   }
 
   if (content) {
@@ -41,18 +33,20 @@ module.exports = ({ sys, fields } = {}, isTeaser = false) => {
       content: [
         {
           data: {},
-          content: [{
-            data: {},
-            marks: [],
-            value: name,
-            nodeType: 'text',
-          }],
+          content: [
+            {
+              data: {},
+              marks: [],
+              value: name,
+              nodeType: 'text',
+            },
+          ],
           nodeType: 'heading-1',
         },
         ...content.content,
       ],
-    };
+    }
   }
 
-  return bikeProps;
-};
+  return bikeProps
+}

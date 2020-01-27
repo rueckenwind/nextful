@@ -1,2 +1,2 @@
-export { Img } from './Img';
-export { ImgContentful } from './ImgContentful';
+export { Img } from './Img'
+export { ImgContentful } from './ImgContentful'

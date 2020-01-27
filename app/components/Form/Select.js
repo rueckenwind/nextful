@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactSelect from 'react-select';
+import { createElement } from 'react'
+import ReactSelect from 'react-select'
 
 const customStyles = {
   control: provided => ({
@@ -22,10 +22,10 @@ const customStyles = {
     ...provided,
     padding: '.125rem',
   }),
-};
+}
 
-export const Select = props => (
-  <ReactSelect
-    styles={customStyles}
-    {...props} />
-);
+export const Select = props =>
+  createElement(ReactSelect, {
+    styles: customStyles,
+    ...props,
+  })

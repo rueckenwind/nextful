@@ -3,4 +3,4 @@ export {
   TemplateFilter,
   TemplateContent,
   TemplateSidebar,
-} from './Template';
+} from './Template'
