@@ -1,6 +1,6 @@
 {
 	"masterPicture": "_design/rw-ico.png",
-	"iconsPath": "/static/assets/images/favicons",
+	"iconsPath": "/assets/images/favicons",
 	"design": {
 		"ios": {
 			"pictureAspect": "noChange",

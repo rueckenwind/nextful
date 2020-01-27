@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
-import viewportsJs from '../../js/viewports.json';
+import styled from '@emotion/styled'
+import viewportsJs from '../../js/viewports.json'
 
 const MaxWidth = styled.div`
   flex-grow: 1;
@@ -17,6 +17,6 @@ const MaxWidth = styled.div`
     flex-grow: 1;
     max-width: 65rem;
   }
-`;
+`
 
-export default MaxWidth;
+export default MaxWidth

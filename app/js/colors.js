@@ -18,4 +18,4 @@ export default {
   instagram: '#e4405f',
   facebook: '#3b5999',
   twitter: '#55acee',
-};
+}

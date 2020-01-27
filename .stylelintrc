@@ -1,12 +1,6 @@
 {
-  "processors": [
-    "stylelint-processor-styled-components"
-  ],
-  "extends": [
-    "stylelint-config-schoenwaldnils",
-    "stylelint-config-styled-components"
-  ],
-  "ignoreFiles": [
-    "**/*.css"
-  ],
+  "extends": "stylelint-config-schoenwaldnils",
+  "rules": {
+    "number-leading-zero": "always"
+  }
 }

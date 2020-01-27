@@ -1,1 +1,1 @@
-export { BikeFilterProvider, BikeFilterConsumer } from './BikeFilterContext';
+export { BikeFilterProvider, BikeFilterConsumer } from './BikeFilterContext'

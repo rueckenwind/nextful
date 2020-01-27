@@ -1,1 +1,1 @@
-export { BikeTeaser, BikeTeaserImg } from './BikeTeaser';
+export { BikeTeaser, BikeTeaserImg } from './BikeTeaser'
