@@ -39,7 +39,6 @@
     "@zeit/next-css": "1.0.1",
     "autoprefixer": "9.7.4",
     "babel-plugin-emotion": "10.0.27",
-    "babel-plugin-inline-react-svg": "1.1.1",
     "camel-case": "4.1.1",
     "chalk": "3.0.0",
     "contentful": "7.13.1",
