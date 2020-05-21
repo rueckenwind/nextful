@@ -23,7 +23,6 @@ class MyApp extends App {
     // test if id is defined. every page with id should have cache.json
     if (pageList && pageList.includes(path)) {
       // NOTE:10 the import wraps the data into the default key
-      console.log({ path })
       apiProps = await loadDataForUrl(path)
       apiProps = apiProps.default
     }

@@ -2,6 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import {
   format,
+  isToday,
   isPast,
   setDay,
   addWeeks,
@@ -84,10 +85,7 @@ const getOpenDay = () => {
     }
   })
 
-  const index = closestIndexTo(
-    new Date(),
-    nextDays.map(day => day && day.from),
-  )
+  const index = closestIndexTo(new Date(), nextDays.map(day => day && day.from))
   return nextDays[index]
 }
 
@@ -115,7 +113,9 @@ const OpenStatus = () => {
   const openFrom = format(openDay.from, 'HH:mm', { locale: deLocale })
   const openTo = format(openDay.to, 'HH:mm', { locale: deLocale })
 
-  const descriptionClosed = `Wir haben wieder am ${openWeekday} von ${openFrom} bis ${openTo} geöffnet.`
+  const nextOpenDay = isToday(openDay.from) ? 'heute' : `am ${openWeekday}`
+
+  const descriptionClosed = `Wir haben ${nextOpenDay} wieder von ${openFrom} bis ${openTo} geöffnet.`
 
   const textClosed = 'Wir haben zur Zeit geschlossen.'
   const textOpen = 'Wir haben geöffnet!'

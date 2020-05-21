@@ -6,7 +6,6 @@ import viewportsJs from '../../js/viewports.json'
 import MaxWidth from '../MaxWidth'
 import ContentBox from '../ContentBox'
 import RichText from '../RichText'
-import BikeFilter from '../BikeFilter'
 
 const StyledTemplate = styled.main`
   flex-grow: 1;
@@ -52,10 +51,6 @@ const GridSidebar = styled.aside`
   }
 `
 
-const GridFilter = styled.div`
-  grid-area: filter;
-`
-
 export const Template = ({ children }) => (
   <StyledTemplate>
     <MaxWidth>
@@ -69,14 +64,6 @@ Template.defaultProps = {}
 Template.propTypes = {
   children: PropTypes.node.isRequired,
 }
-
-export const TemplateFilter = () => (
-  <GridFilter>
-    <ContentBox>
-      <BikeFilter />
-    </ContentBox>
-  </GridFilter>
-)
 
 export const TemplateContent = ({ children, templateHasSidebar }) => (
   <GridContent fullWidth={!templateHasSidebar}>{children}</GridContent>

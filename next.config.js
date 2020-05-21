@@ -7,15 +7,6 @@ const config = {
   exportTrailingSlash: true,
   webpack: webpackConfig => {
     webpackConfig.module.rules.push({
-      test: /\.css$/,
-      use: [
-        {
-          loader: 'raw-loader',
-        },
-      ],
-    })
-
-    webpackConfig.module.rules.push({
       test: /\.(jpe?g|png|gif|webp)$/,
       use: [
         {

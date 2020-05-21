@@ -5,23 +5,11 @@ const { getEntries } = createClient({
   accessToken: process.env.CONTENTFUL_CONTENT_DELIVERY_TOKEN,
 })
 
-const options = {
-  news: {
-    'fields.publishDate[lte]': new Date(),
-    order: '-fields.publishDate', // '-' for reverse order
-  },
-  bikes: {
-    'fields.publishDate[lte]': new Date(),
-    order: '-fields.publishDate', // '-' for reverse order
-  },
-}
-
 module.exports = async type => {
   return getEntries({
     content_type: type,
     limit: 1000,
     include: 10,
-    ...options[type],
   }).catch(e => {
     // eslint-disable-next-line no-console
     console.log(e)

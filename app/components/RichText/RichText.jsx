@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react'
 import PropTypes from 'prop-types'
 import dynamic from 'next/dynamic'
@@ -9,8 +10,6 @@ import Link from '../Link'
 import { MapStatic } from '../MapStatic'
 import { OpeningHours } from '../OpeningHours'
 import { ContactForm } from '../ContactForm'
-import { BikeTeaser } from '../BikeTeaser'
-import getBikeProps from '../../../scripts/remodel/getBikeProps'
 
 const OpenStatus = dynamic(
   () => import('../OpeningHours').then(mod => mod.OpenStatus),
@@ -48,11 +47,6 @@ const options = {
         case 'sidebarWidget':
         case 'contentKomponente':
           return customComponents[target.fields.id]
-
-        case 'bike':
-          // eslint-disable-next-line no-case-declarations
-          const bike = getBikeProps(target)
-          return <BikeTeaser {...bike} key={bike.id} />
 
         default:
           return null

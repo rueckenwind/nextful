@@ -83,14 +83,6 @@ const navItems = [
     href: '/',
   },
   {
-    title: 'Fahrräder',
-    href: '/fahrraeder/',
-  },
-  {
-    title: 'News',
-    href: '/news/',
-  },
-  {
     title: 'Kontakt',
     href: '/kontakt/',
   },
