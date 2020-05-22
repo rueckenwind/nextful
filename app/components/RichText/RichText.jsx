@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS, INLINES } from '@contentful/rich-text-types'
 
-import { H1, H2, H3, UL, OL, LI, P, HR } from '../Typography'
+import { H1, H2, H3, UL, OL, LI, HR } from '../Typography'
 import Link from '../Link'
 import { MapStatic } from '../MapStatic'
 import { OpeningHours } from '../OpeningHours'
@@ -29,7 +29,7 @@ const options = {
     [BLOCKS.PARAGRAPH]: (node, children) => {
       if (!children || (children.length === 1 && children[0] === ''))
         return null
-      return <P>{children}</P>
+      return <p>{children}</p>
     },
     [BLOCKS.HR]: () => <HR />,
     [BLOCKS.EMBEDDED_ENTRY]: node => {
