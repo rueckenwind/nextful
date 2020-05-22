@@ -86,8 +86,7 @@
   "lint-staged": {
     "**/*.js": [
       "eslint --fix",
-      "stylelint --formatter verbose",
-      "git add"
+      "stylelint --formatter verbose"
     ]
   },
   "husky": {
