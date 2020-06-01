@@ -60,7 +60,16 @@ const options = {
     ),
   },
   renderText: text =>
-    text.length ? text.split('\n').flatMap((t, i) => [i > 0 && <br />, t]) : '',
+    text.split('\n').map((t, i) =>
+      i > 0 ? (
+        <>
+          <br />
+          {t}
+        </>
+      ) : (
+        t
+      ),
+    ),
 }
 
 const RichText = ({ content }) => {
