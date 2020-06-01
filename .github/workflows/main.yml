@@ -11,28 +11,41 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
+
+      - name: Install nvm
+        shell: bash -l {0}
+        run: nvm install
+
       - name: npm install
-        run: npm ci
+        run: |
+          rm -rf ./node_modules
+          npm ci
+
       - name: lint js
         run: npm run lint:js
+
       - name: lint css
         run: npm run lint:css
+
       - name: export
         run: npm run export
         env:
           CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
           CONTENTFUL_CONTENT_DELIVERY_TOKEN: ${{ secrets.CONTENTFUL_CONTENT_DELIVERY_TOKEN }}
+
       - name: lint html
         run: npm run lint:html
+
       - name: S3 Sync
         uses: jakejarvis/s3-sync-action@v0.5.0
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: 'eu-central-1'   # optional: defaults to us-east-1
-          SOURCE_DIR: 'out'      # optional: defaults to entire repository
+          AWS_REGION: 'eu-central-1' # optional: defaults to us-east-1
+          SOURCE_DIR: 'out' # optional: defaults to entire repository
           DEST_DIR: 'website/production'
+
       - name: Invalidate Cloudfront
         uses: chetan/invalidate-cloudfront-action@v1.0
         env:
@@ -40,4 +53,4 @@ jobs:
           PATHS: '/*'
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: 'eu-central-1'   # optional: defaults to us-east-1
+          AWS_REGION: 'eu-central-1' # optional: defaults to us-east-1
