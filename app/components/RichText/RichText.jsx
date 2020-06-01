@@ -59,7 +59,8 @@ const options = {
       <Link href={node.data.uri}>{children}</Link>
     ),
   },
-  renderText: text => text.split('\n').flatMap((t, i) => [i > 0 && <br />, t]),
+  renderText: text =>
+    text.length ? text.split('\n').flatMap((t, i) => [i > 0 && <br />, t]) : '',
 }
 
 const RichText = ({ content }) => {
