@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Head from 'next/head'
 
 import Favicons from '../Favicons'
 
-const Meta = ({ url, type, title, description, image }) => {
+export const Meta = ({ url, type, title, description, image }) => {
   return (
-    <Head>
+    <>
       <meta content="width=device-width,initial-scale=1" name="viewport" />
 
       <title>{title}</title>
@@ -26,7 +25,7 @@ const Meta = ({ url, type, title, description, image }) => {
       <meta name="twitter:creator" content="@rueckenwind-luebeck" />
 
       <Favicons />
-    </Head>
+    </>
   )
 }
 
@@ -48,5 +47,3 @@ Meta.propTypes = {
   description: PropTypes.string,
   image: PropTypes.string,
 }
-
-export default Meta

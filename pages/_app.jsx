@@ -1,8 +1,10 @@
 import React from 'react'
 import App from 'next/app'
+import Head from 'next/head'
 
 import { loadDataForUrl, loadDataFromCache } from '../lib/cache'
 
+import { Meta } from '../app/components/Meta'
 import { GlobalStyles } from '../app/components/GlobalStyles'
 
 /**
@@ -56,7 +58,6 @@ class MyApp extends App {
 
     return (
       <>
-        {/* <Meta {...props} /> */}
         <GlobalStyles />
         <Component {...pageProps} />
       </>
