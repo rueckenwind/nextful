@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import styled from '@emotion/styled'
 
 import { H3 } from '../Typography'
@@ -9,7 +9,7 @@ const TableRow = styled.div`
 `
 
 const OpeningHours = () => (
-  <Fragment>
+  <>
     <H3>Öffnungszeiten</H3>
     <TableRow>
       <span>Mo. - Fr.</span>
@@ -19,7 +19,7 @@ const OpeningHours = () => (
       <span>Sa.</span>
       <span>11:00 - 14:00</span>
     </TableRow>
-  </Fragment>
+  </>
 )
 
 export default OpeningHours

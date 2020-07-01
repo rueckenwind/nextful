@@ -5,6 +5,8 @@ import { css } from '@emotion/core'
 import colors from '../../js/colors'
 import times from '../../js/times'
 
+const MAIL_ADDRESS = 'mail@rw-hl.de'
+
 const Form = styled.form`
   display: grid;
   grid-gap: 0.75rem;
@@ -46,9 +48,8 @@ const Button = styled.button`
 `
 
 export const ContactForm = () => {
-  console.log('ContactForm')
   return (
-    <Form action="https://formspree.io/nils.schoenwald@gmail.com" method="POST">
+    <Form action={`https://formspree.io/${MAIL_ADDRESS}`} method="POST">
       <Input type="text" name="Name" placeholder="Ihr Name" />
       <Input type="email" name="E-Mail" placeholder="Ihre E-Mail" />
       <Textarea name="Text" placeholder="Ihre Nachricht" />
