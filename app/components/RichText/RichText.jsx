@@ -31,7 +31,7 @@ const options = {
       if (!children || (children.length === 1 && children[0] === '')) {
         return null
       }
-      return <p>{children}</p>
+      return <p key={children}>{children}</p>
     },
     [BLOCKS.HR]: () => <HR />,
     [BLOCKS.EMBEDDED_ENTRY]: node => {
