@@ -8,7 +8,7 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types'
 import { H1, H2, H3, UL, OL, LI, HR, QUOTE } from '../Typography'
 import Link from '../Link'
 import { MapStatic } from '../MapStatic'
-import { OpeningHours } from '../OpeningHours'
+import { OpeningHours, Closed } from '../OpeningHours'
 import { ContactForm } from '../ContactForm'
 
 const OpenStatus = dynamic(
@@ -39,6 +39,7 @@ const options = {
       const { id } = target.sys.contentType.sys
 
       const customComponents = {
+        closed: <Closed />,
         openingStatus: <OpenStatus />,
         openingHours: <OpeningHours />,
         staticMap: <MapStatic />,

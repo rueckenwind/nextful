@@ -16,7 +16,7 @@ const TableRow = styled.div`
   }
 `
 
-const OpeningHours = () => (
+export const OpeningHours = () => (
   <>
     <H3>Öffnungszeiten</H3>
     <TableRow>
@@ -29,5 +29,3 @@ const OpeningHours = () => (
     </TableRow>
   </>
 )
-
-export default OpeningHours

@@ -4,7 +4,6 @@ import Head from 'next/head'
 
 import { loadDataForUrl, loadDataFromCache } from '../lib/cache'
 
-import { Meta } from '../app/components/Meta'
 import { GlobalStyles } from '../app/components/GlobalStyles'
 
 /**
@@ -26,7 +25,6 @@ class MyApp extends App {
     if (pageList && pageList.includes(path)) {
       // NOTE:10 the import wraps the data into the default key
       apiProps = await loadDataForUrl(path)
-      apiProps = apiProps.default
     }
 
     return {
@@ -41,23 +39,20 @@ class MyApp extends App {
   }
 
   render() {
+    // @ts-ignore
     const { Component, props } = this.props
 
-    // NOTE: Filtering meta related props
-    const {
-      // description,
-      // opengraphDescription,
-      // opengraphImage,
-      // opengraphTitle,
-      // sitemapChangefreq,
-      // sitemapIsExcluded,
-      // sitemapPriority,
-      // components,
-      ...pageProps
-    } = props
+    const { ...pageProps } = props
 
     return (
       <>
+        <Head>
+          <meta
+            name="viewport"
+            content="height=device-height, initial-scale=1, minimum-scale=1"
+          />
+        </Head>
+
         <GlobalStyles />
         <Component {...pageProps} />
       </>

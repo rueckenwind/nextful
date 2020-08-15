@@ -2,12 +2,12 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { de } from 'date-fns/locale'
 
+import { format, isToday } from 'date-fns'
 import { PaddedBox } from '../ContentBox/ContentBox'
 import colors from '../../js/colors'
 import { getOpeningStatus } from './getOpeningStatus'
 import { openTimes } from './openTimes'
 import { getOpenHours } from './getOpenHours'
-import { format, isToday } from 'date-fns'
 import { setTimeOfDay } from './utils'
 
 const Status = styled.div<{ status: boolean }>`
@@ -21,7 +21,7 @@ const Status = styled.div<{ status: boolean }>`
   background-color: ${({ status }) => (status ? colors.greenDark : colors.red)};
 `
 
-const OpenStatus = () => {
+export const OpenStatus = () => {
   const isOpen = getOpeningStatus(openTimes)
   const openHours = getOpenHours(isOpen)
 
@@ -53,9 +53,7 @@ const OpenStatus = () => {
   return (
     <>
       <Status status={isOpen}>{isOpen ? textOpen : textClosed}</Status>
-      {!status && <PaddedBox>{descriptionClosed}</PaddedBox>}
+      {!isOpen && <PaddedBox>{descriptionClosed}</PaddedBox>}
     </>
   )
 }
-
-export default OpenStatus
